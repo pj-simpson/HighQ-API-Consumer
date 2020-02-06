@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title_block %}
+    Login
+{% endblock %}
+
+{% block body_block %}
+
+    <section class="hero is-info welcome is-small">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">Login To HighQ System Admin App...</h1>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+
+        <div class="columns is-one-quarter is-centered">
+            <div class="column is-one-quarter">
+                <div class="row">
+
+                <form role="form" method="post" action=".">
+                    {% csrf_token %}
+                    <div>
+                        <div class="field">
+                            <p class="control required">
+                                <input class="input" type="text" name="username" id="id_username" class="form-control" placeholder="Username" required autofocus>
+                            </p>
+                        </div>
+                        <div class="field">
+                            <p class="control required">
+                                <input class="input" type="password" name="password" id="id_password" class="form-control" placeholder="Password" required>
+                            </p>
+                        </div>
+                        <div class="field">
+                            <p class="control">
+                                <button class="button is-primary is-pulled-right" type="submit" value="Submit">Sign in</button>
+                            </p>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            </div>
+        </div>
+    </section>
+    </div>
+        </div>
+
+
+{% endblock %}

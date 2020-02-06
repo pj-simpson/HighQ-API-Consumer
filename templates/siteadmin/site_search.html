@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title_block %}
+    Site Search
+{% endblock %}
+
+{% block body_block %}
+
+    <section class="hero is-info welcome is-small">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">Search For A Site</h1>
+            </div>
+        </div>
+    </section>
+
+     <section class="section">
+        <div class="columns">
+
+            <div class="column is-4">
+            <div class="card events-card">
+
+                    <div class="row">
+                        <div class ="card-content">
+                         <form id="hqSiteSearchForm" action="">
+                            <div class="field">
+                                <p class="control has-icons-left">
+                                    <span class="icon is-left">
+                                        <i class="fa fa-sitemap"></i>
+                                    </span>
+                                    <input class="input" placeholder="Site name" type="text" name="sitename" maxlength="200" required="" id="id_site"/>
+                                </p>
+                            </div>
+                             <br />
+                            <div class="field">
+                                <p class="control">
+                                    <button class="button is-primary" type="submit" value="Submit">Search</button>
+                                </p>
+                            </div>
+                        </form>
+                        </div>
+                </div>
+                <footer class="card-footer"/>
+            </div>
+        </div>
+
+            <div class="column is-8">
+                <div class="row" id="resultTile">
+            </div>
+     </section>
+    </div>
+
+
+
+
+{% endblock %}
+
+
+
+
+
+

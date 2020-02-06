@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title_block %}
+    Demo Web Application Consuming HighQ APIs
+{% endblock %}
+
+{% block body_block %}
+    <section class="hero is-info welcome is-small">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">HighQ System Admin Demo App</h1>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="columns is-one-quarter is-centered">
+            <div class="column">
+                <div class="row">
+                    <p>
+                        This simple web application is a demonstration of how to consume HighQ Collaborate's RESTful API.
+                        It has been built using the Django framework, which is python based and open source.
+                    </p>
+
+                    <br/>
+
+                    <p>
+                        The imagined use-case is that there are 1st line/ service desk workers, who you
+                        want to be able to carry out certain system level tasks, but dont want to expose the full system admin
+                        functionality to.
+                    </p>
+
+                    <br/>
+
+                    <p>
+                        If, for whatever reason, you've found this and want to get in touch, I can be found at:
+                        peter.simpson at highq dot com.
+                    </p>
+
+                    <br/>
+
+                    <p>
+                        If you wish to be added to our developer community, where you will find the API documentation,
+                        please email support at highq dot com
+                    </p>
+
+                </div>
+            </div>
+        </div>
+       </section>
+
+
+     </div>
+{% endblock %}

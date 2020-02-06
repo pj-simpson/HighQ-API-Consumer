@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <link rel="icon" href="{% static 'useradmin/images/favicon.ico' %}">
+
+
+        <title>
+            HighQ Sys Admin - {% block title_block %}How to consume Collaborate's RESTful APIs{% endblock %}
+        </title>
+
+        <!-- Bulma Version 0.8.x-->
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+        <link rel="stylesheet" href="https://unpkg.com/bulma@0.8.0/css/bulma.min.css" />
+        <link rel="stylesheet" href="/static/useradmin/css/admin.css">
+
+    </head>
+
+    <body>
+            <nav class="navbar is-white">
+                <div class="container">
+                    <div class="navbar-brand">
+                        <a class="navbar-item brand-text" href="{% url 'index' %}">HighQ System Admin</a>
+                        <div class="navbar-burger burger" data-target="navMenu">
+                            <span/>
+                            <span/>
+                            <span/>
+                        </div>
+                    </div>
+
+
+                        <div class="navbar-menu" id="navMenu">
+                            <div class="navbar-start">
+                                <a class="navbar-item" href="{% url 'index' %}">Home</a>
+                                {% if user.is_authenticated %}
+                                <a class="navbar-item" href="{% url 'useradmin:user_search' %}">Users</a>
+                                <a class="navbar-item" href="{% url 'siteadmin:site_search' %}">Sites</a>
+                                <a class="navbar-item" href="{% url 'auth_logout' %}?next=/">Logout</a>
+                                {% else %}
+                                <a class="navbar-item" href="{% url 'auth_login' %}">Login</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                </div>
+            </nav>
+
+        <div class="container">
+            <div class="columns is-centered">
+
+                    <div class="column">
+                            {% block body_block %}{% endblock %}
+                    </div>
+
+                    <!-- FOOTER -->
+            {% block footer_block %}
+                    <footer class="footer">
+                        <div class="content has-text-centered">
+                            <p><a href="#">Back to top</a></p>
+                            <p>2020 Peter Simpson &middot; <a href="https://github.com/pj-simpson/HighQ-API-Consumer">Github Repository</a>&middot; <a href="https://highq.com/gb/">HighQ</a> &middot; <a href="https://collaborate.highq.com/sitepoint/viewWikiPage.action?metaData.siteID=714&metaData.wikiID=7527">Collaborate API</a></p>
+
+                        </div>
+                    </footer>
+            {% endblock %}
+            </div>
+        </div>
+
+{% block javascript %}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+    <script src="{% static "useradmin/js/bulma.js" %}"></script>
+    <script src="{% static "useradmin/js/jquery-3.3.1.min.js" %}"></script>
+    <script src="{% static "useradmin/js/useradmin-ajax.js" %}"></script>
+    <script src="{% static "siteadmin/js/siteadmin-ajax.js" %}"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+
+{% endblock javascript %}
+
+    </body>
+</html>
+
