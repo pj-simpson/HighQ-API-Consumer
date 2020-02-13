@@ -8,7 +8,7 @@ from HighQSysAdmProj import settings
 from .models import OauthToken;
 
 
-#helper function -- is a datetime within 30 seconds of now?
+#helper function -- is a datetime within 30 mins of now?
 def is_close(a_datetime):
     if (a_datetime - timezone.now()).total_seconds()/60 <= 30:
         return True
