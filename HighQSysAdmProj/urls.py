@@ -22,6 +22,7 @@ urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
     path('users/', include('useradmin.urls')),
     path('sites/', include('siteadmin.urls')),
+    path('orgs/', include('orgadmin.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('registration.backends.simple.urls')),
 

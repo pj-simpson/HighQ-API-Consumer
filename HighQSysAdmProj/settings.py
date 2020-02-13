@@ -47,6 +47,7 @@ INSTALLED_APPS = [
 
     'useradmin',
     'siteadmin',
+    'orgadmin',
     'registration',
 ]
 

@@ -42,6 +42,7 @@
                                 {% if user.is_authenticated %}
                                 <a class="navbar-item" href="{% url 'useradmin:user_search' %}">Users</a>
                                 <a class="navbar-item" href="{% url 'siteadmin:site_search' %}">Sites</a>
+                                <a class="navbar-item" href="{% url 'orgadmin:org_search' %}">Organisations</a>
                                 <a class="navbar-item" href="{% url 'auth_logout' %}?next=/">Logout</a>
                                 {% else %}
                                 <a class="navbar-item" href="{% url 'auth_login' %}">Login</a>
@@ -78,6 +79,7 @@
     <script src="{% static "useradmin/js/jquery-3.3.1.min.js" %}"></script>
     <script src="{% static "useradmin/js/useradmin-ajax.js" %}"></script>
     <script src="{% static "siteadmin/js/siteadmin-ajax.js" %}"></script>
+    <script src="{% static "orgadmin/js/orgadmin.js" %}"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 
 {% endblock javascript %}

@@ -34,7 +34,7 @@ function appendTop(search_result) {
     $('#hqUserSearchForm').trigger("reset")
     $("#resultheader").append(`<div class="card events-card">
                     <header class="card-header">
-                        <h3 class="\card-header-title\" id=\"resultheader_h\">
+                        <h3 class="card-header-title" id="resultheader_h">
                             <strong>${search_result.firstname} ${search_result.lastname}</strong> | Added to the instance: ${search_result.createddate} | Last Login: ${search_result.lastlogindate}
                         </h3>
                     </header>

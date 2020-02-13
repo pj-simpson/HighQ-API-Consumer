@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title_block %}
+    Organisation Search
+{% endblock %}
+
+{% block body_block %}
+
+    <section class="hero is-info welcome is-small">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">Submit An Organisation</h1>
+            </div>
+        </div>
+    </section>
+
+     <section class="section">
+        <div class="columns">
+
+            <div class="column is-4">
+            <div class="card events-card">
+
+                    <div class="row">
+                        <div class ="card-content">
+                         <form id="hqOrgSubmitForm" action="">
+
+                            <div class="field">
+                                <p class="control has-icons-left">
+                                    <span class="icon is-left">
+                                        <i class="fa fa-users"></i>
+                                    </span>
+                                    <input class="input" placeholder="Org name" type="text" name="orgname" maxlength="200" required="" id="id_org_name"/>
+                                </p>
+                            </div>
+
+                             <div class="field">
+                                <p class="control has-icons-left">
+                                    <span class="icon is-left">
+                                        <i class="fa fa-address-card"></i>
+                                    </span>
+                                    <input class="input" placeholder="URL" type="url" name="url" maxlength="200" id="id_url"/>
+                                </p>
+                            </div>
+
+
+
+                             <div class="field">
+                                 <p>
+                                     <label for="id_status">Status:</label>
+                                     <div class="select">
+                                         <select name="status" id="id_status">
+                                              <option value="active">active</option>
+                                              <option value="archive">archive</option>
+                                              <option value="pending">pending</option>
+                                        </select>
+                                     </div>
+                                 </p>
+                             </div>
+                             <br />
+                            <div class="field">
+                                <p class="control">
+                                    <button class="button is-primary" type="submit" value="Submit">Submit</button>
+                                </p>
+                            </div>
+                        </form>
+                        </div>
+                </div>
+                <footer class="card-footer"/>
+            </div>
+        </div>
+
+            <div class="column is-8">
+                <div class="row" id="resultTile">
+            </div>
+     </section>
+    </div>
+
+
+
+
+{% endblock %}
