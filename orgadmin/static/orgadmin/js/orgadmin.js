@@ -23,7 +23,7 @@ $("#hqOrgSearchForm").submit(function(event) {
                     alert(search_result.message);
                 }
                 else {
-                    appendToresultTile(search_result);
+                    appendToorgresultTile(search_result);
                 }
 
              }
@@ -35,7 +35,7 @@ $("#hqOrgSearchForm").submit(function(event) {
 });
 
 
-function appendToresultTile(search_result) {
+function appendToorgresultTile(search_result) {
     $('#hqOrgSearchForm').trigger("reset");
     $("#resultTile").empty()
 

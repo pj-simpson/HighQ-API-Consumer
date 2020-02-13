@@ -11,13 +11,14 @@ $("#hqSiteSearchForm").submit(function(event) {
             },
             dataType: 'json',
             success: function (search_result) {
-            if (search_result.empty_check == false) {
-                appendToresultTile(search_result)
+            if (search_result.empty_check == true) {
+                alert(search_result.message);
+
             }
             else {
-                $('#hqSiteSearchForm').trigger("reset");
-                $("#resultTile").empty()
-                alert(search_result.message)
+                console.log('here we go!')
+                appendTositeresultTile(search_result);
+
             }
              }
         });
@@ -27,11 +28,13 @@ $("#hqSiteSearchForm").submit(function(event) {
     $('#hqSiteSearchForm').trigger("reset");
 });
 
-function appendToresultTile(search_result) {
-    $('#hqSiteSearchForm').trigger("reset");
-    $("#resultTile").empty()
 
+
+function appendTositeresultTile(search_result) {
+    console.log('inside the function !');
+    $('#hqSiteSearchForm').trigger("reset");
     $.each(search_result.site, function(key, value) {
+        console.log('each site')
                  $("#resultTile").append(`
                 <div class="tile is-ancestor has-text-centered is-6">  
                     <div class="tile is-parent">
@@ -79,7 +82,7 @@ function appendToresultTile(search_result) {
                     </footer>
                   </div>
                 </div>`);
-    })
+    });
 };
 
 //show Modal
@@ -121,8 +124,6 @@ function sendMessage(emailMessage,userId,siteId) {
                     else {
                          alert(message_result.message);
                     }
-
-
 
                     $('#hqSiteMessage').trigger("reset");
                     $(".modal.is-active").removeClass("is-active");
