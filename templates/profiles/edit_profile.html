@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title_block %}
+    Edit Your Profile
+{% endblock %}
+
+{% block body_block %}
+    <section class="hero is-info welcome is-small">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">Edit Your Profile</h1>
+            </div>
+        </div>
+    </section>
+
+       <section class="section">
+        <div class="columns is-one-quarter is-centered">
+            <div class="column is-one-quarter">
+                <div class="row">
+
+                    <form method="post" action="." enctype="multipart/form-data" >
+                        {% csrf_token %}
+
+                            <div class="field">
+
+                                <div class="file">
+                                  <label class="file-label">
+                                    <input class="file-input" type="file" name="photo" accept="image/*" id="id_photo" >
+                                    <span class="file-cta">
+                                      <span class="file-icon">
+                                        <i class="fa fa-cloud-upload"></i>
+                                      </span>
+                                      <span class="file-label">
+                                        Choose a Photo…
+                                      </span>
+                                    </span>
+                                  </label>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <p class="control">
+                                    <input type="email" name="contact_email" maxlength="254" id="id_contact_email" class="input form-control" placeholder="Contact Email">
+                                </p>
+                            </div>
+
+                            <div class="field">
+                                <p class="control">
+                                    <input type="number" name="phone_number" class="input form-control" id="id_phone_number" placeholder="Phone number">
+                                </p>
+                            </div>
+
+                            <div class="field">
+                                <p class="control required">
+                                    <button class="button is-primary is-pulled-right" type="submit" value="Submit">Update</button>
+                                </p>
+                            </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+       </section>
+
+    </div>
+
+{% endblock %}
+
+
+
+
+
+
+

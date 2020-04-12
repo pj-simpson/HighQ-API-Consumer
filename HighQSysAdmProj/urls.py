@@ -16,14 +16,26 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 from useradmin import views
+from profiles.views import UserRegisterView
 
 urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
     path('users/', include('useradmin.urls')),
     path('sites/', include('siteadmin.urls')),
     path('orgs/', include('orgadmin.urls')),
+    path('profile/', include('profiles.urls')),
+    path('tasks/', include('tasks.urls')),
     path('admin/', admin.site.urls),
+    path('register/',UserRegisterView.as_view(),name='register'),
     path('accounts/', include('registration.backends.simple.urls')),
 
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
+

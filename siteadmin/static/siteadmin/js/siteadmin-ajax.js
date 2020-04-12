@@ -1,6 +1,5 @@
 $("#hqSiteSearchForm").submit(function(event) {
     event.preventDefault();
-    $('#resultTile').empty;
     var siteSearchInput = $('input[name="sitename"]').val().trim();
     if (siteSearchInput) {
         // Create Ajax Call
@@ -12,7 +11,10 @@ $("#hqSiteSearchForm").submit(function(event) {
             dataType: 'json',
             success: function (search_result) {
             if (search_result.empty_check == true) {
+                $("#hqSiteSearchForm").trigger("reset");
+                $("#siteResultTile").empty();
                 alert(search_result.message);
+
 
             }
             else {
@@ -25,17 +27,19 @@ $("#hqSiteSearchForm").submit(function(event) {
       } else {
         alert("email value must have a valid value.");
     }
-    $('#hqSiteSearchForm').trigger("reset");
+    $("#hqSiteSearchForm").trigger("reset");
+
+
 });
 
 
 
 function appendTositeresultTile(search_result) {
     console.log('inside the function !');
-    $('#hqSiteSearchForm').trigger("reset");
+    $("#siteResultTile").empty();
     $.each(search_result.site, function(key, value) {
         console.log('each site')
-                 $("#resultTile").append(`
+                 $("#siteResultTile").append(`
                 <div class="tile is-ancestor has-text-centered is-6">  
                     <div class="tile is-parent">
                         <article class="tile is-child box">
@@ -87,7 +91,7 @@ function appendTositeresultTile(search_result) {
 
 //show Modal
 
-$("#resultTile").on("click","#showModal",function(event){
+$("#siteResultTile").on("click","#showModal",function(event){
         var modalId = event.originalEvent.toElement.dataset.modalid;
         $("#modal-site" + modalId).addClass("is-active");
 
@@ -95,7 +99,7 @@ $("#resultTile").on("click","#showModal",function(event){
 
 //hide Modal
 
-$("#resultTile").on("click","#closeModal",function(event){
+$("#siteResultTile").on("click","#closeModal",function(event){
         var modalId = event.originalEvent.toElement.dataset.modalid;
         $("#modal-site" + modalId).removeClass("is-active");
 

@@ -1,0 +1,49 @@
+{% extends 'task_base.html' %}
+{% load static %}
+
+{% block title_block %}
+    Create Task
+{% endblock %}
+
+{% block body_block %}
+     <section class="hero is-info welcome is-small">
+        <div class="hero-body">
+            <div class="container">
+                <h2 class="subtitle"><a href="{% url "tasks:task_list" %}">Tasks...</a></h2>
+                <h2 class="title">Create New Task</h2>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="columns is-half is-centered">
+            <div class="column is-8">
+                 <div class="row">
+                        <form role="form" method="post" action=".">
+                            {% csrf_token %}
+                            <div class="field">
+                                <p class="control">
+                                    <label for="id_subject">Subject:</label>
+                                    <input class="input" type="text" name="subject" maxlength="250" required="" id="id_subject">
+                                </p>
+                            </div>
+                            <div class="field">
+                                <p class="control">
+                                    <label for="id_body">Body:</label>
+                                    <textarea class="textarea" name="body" cols="40" rows="10" required="" id="id_body">
+                                    </textarea>
+                                </p>
+                            </div>
+                            <div class="field">
+                                <p class="control">
+                                    <button type="submit" class="button is-primary">Submit</button>
+                                </p>
+                            </div>
+                        </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    </div>
+{% endblock %}
+

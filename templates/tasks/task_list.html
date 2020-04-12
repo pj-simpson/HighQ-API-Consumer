@@ -1,0 +1,42 @@
+{% extends 'task_base.html' %}
+
+{% load static %}
+
+{% block title_block %}
+    Latest Tasks
+{% endblock %}
+
+{% block body_block %}
+    <section class="hero is-info welcome is-small">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">Tasks...</h1>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="columns is-half is-centered">
+            <div class="column is-8">
+                {% for task in task_list %}
+                 <div class="tile is-ancestor">
+                  <div class="tile is-vertical">
+                    <div class="tile">
+                      <div class="tile is-parent is-vertical">
+                        <article class="tile is-child box">
+                          <p class="title">{{task.subject}}</p>
+                          <p class="subtitle">{{task.body|truncatewords:12}}</p>
+                            <a href="{{ task.get_absolute_url }}">Read More...</a>
+                        </article>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    </div>
+{% endblock %}
+
+

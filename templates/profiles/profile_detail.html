@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title_block %}
+    {{ object.user.username }}Profile
+{% endblock %}
+
+{% block body_block %}
+    <section class="hero is-info welcome is-small">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">{{object.user.username }}'s Profile</h1>
+            </div>
+        </div>
+    </section>
+
+       <section class="section">
+        <div class="columns is-one-quarter is-centered">
+            <div class="column is-three-quarters">
+                <div class="row">
+                    <div class="card">
+                          <div class="card-content">
+                            <div class="media">
+                              <div class="media-left">
+                                <figure >
+                                {% load thumbnail %}
+                                {% thumbnail object.photo "300x300" as im %}
+                                    <img src="{{im.url}}" alt="User Profile Photo">
+                                {% endthumbnail %}
+                                </figure>
+                              </div>
+                              <div class="media-content">
+                                <p class="title is-4">{{profile.user.username}}</p>
+                                  <p class="subtitle is-6"><a href="mailto:{{ object.contact_email }}">{{object.contact_email}}</a></p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+
+
+                </div>
+            </div>
+        </div>
+       </section>
+
+    </div>
+
+{% endblock %}

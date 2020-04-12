@@ -1,6 +1,6 @@
 $("#hqOrgSearchForm").submit(function(event) {
     event.preventDefault();
-    $('#resultTile').empty;
+    $('#orgResultTile').empty;
     var orgSearchInput = $('input[name="orgname"]').val().trim();
     var orgDomainInput = $('input[name="domainname"]').val().trim();
     var orgstatusInput = $('select[name="status"]').children("option:selected"). val();
@@ -20,6 +20,9 @@ $("#hqOrgSearchForm").submit(function(event) {
             success: function (search_result) {
                 console.log(search_result)
                 if (search_result.empty_check == true){
+                    $('#hqOrgSearchForm').trigger("reset");
+                    $("#orgResultTile").empty()
+
                     alert(search_result.message);
                 }
                 else {
@@ -37,10 +40,10 @@ $("#hqOrgSearchForm").submit(function(event) {
 
 function appendToorgresultTile(search_result) {
     $('#hqOrgSearchForm').trigger("reset");
-    $("#resultTile").empty()
+    $("#orgResultTile").empty()
 
     $.each(search_result.organisation, function(key, value) {
-                 $("#resultTile").append(`
+                 $("#orgResultTile").append(`
                 <div class="tile is-ancestor has-text-centered is-8">  
                     <div class="tile is-parent">
                         <article class="tile is-child box">

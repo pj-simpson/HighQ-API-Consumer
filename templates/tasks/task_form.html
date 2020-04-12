@@ -1,0 +1,61 @@
+{% extends 'task_base.html' %}
+{% load static %}
+
+{% block title_block %}
+    Edit Task
+{% endblock %}
+
+{% block body_block %}
+     <section class="hero is-info welcome is-small">
+        <div class="hero-body">
+            <div class="container">
+                <h2 class="subtitle"><a href="{% url "tasks:task_list" %}">Tasks...</a></h2>
+                <h2 class="subtitle"><a href="{{ task.get_absolute_url }}">{{ object.subject }} Details...</a></h2>
+                <h2 class="title">Edit {{ object.subject }}</h2>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="columns is-half is-centered">
+            <div class="column is-8">
+                 <div class="row">
+                        <form role="form" method="post" action=".">
+                            {% csrf_token %}
+                            <div>
+                                <div class="field">
+                                 <p>
+                                     <label for="id_status">Status:</label>
+                                     <div class="select">
+                                         <select name="status" id="id_status">
+                                             {% for value,label in object.Status.choices %}
+                                                 <option value="{{value}}">{{label}}</option>
+                                             {% endfor %}
+                                        </select>
+                                     </div>
+                                 </p>
+                                <p>
+                                     <label for="id_asignee">Asignee:</label>
+                                     <div class="select">
+                                         <select name="asignee" id="id_asignee">
+                                             {% for user in object.get_possible_assignees.values %}
+                                                 <option value="{{ user.id}}">{{ user.username }}</option>
+                                             {% endfor %}
+
+                                        </select>
+                                     </div>
+                                 </p>
+                             </div>
+                            </div>
+                            <div class="field">
+                                <p class="control">
+                                    <button type="submit" class="button is-primary">Submit</button>
+                                </p>
+                            </div>
+                        </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    </div>
+{% endblock %}

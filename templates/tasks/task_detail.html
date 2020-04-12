@@ -1,0 +1,66 @@
+{% extends 'task_base.html' %}
+{% load static %}
+{% load perm_group_tags %}
+
+{% block title_block %}
+    {{object.subject}}
+{% endblock %}
+
+{% block body_block %}
+    <section class="hero is-info welcome is-small">
+        <div class="hero-body">
+            <div class="container">
+                <h2 class="subtitle"><a href="{% url "tasks:task_list" %}">Tasks...</a></h2>
+                <h1 class="title">{{ object.subject }} Details</h1>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="columns is-half is-centered">
+            <div class="column">
+
+                <div class="card">
+                  <div class="card-content">
+                    <p class="title">
+                      {{object.subject}}
+                    </p>
+                    <p class="subtitle">
+                      Raised by <a href="{% url "profiles:profile_detail" object.poster.id %}">{{ object.poster }}</a>  on {{ object.created }}
+                    </p>
+                      <p class="is-small">
+                          {{ object.body }}
+                      </p>
+                  </div>
+                  <footer class="card-footer">
+                    <p class="card-footer-item">
+                      <span>
+                        Status: "{{object.get_status_display}}"
+                      </span>
+                    </p>
+                    <p class="card-footer-item">
+                      <span>
+                        {% if object.asignee %}
+                           Assigned to: {{ object.asignee }}
+                        {% else %}
+                          Not yet Assigned
+                        {% endif %}
+                      </span>
+                    </p>
+                      <p class="card-footer-item">
+                      <span>
+                          {% if request.user|has_group:"Second Line" %}
+                                <a href="{% url "tasks:task_edit" object.pk object.slug %}">Edit</a>
+                          {% else %}
+                              No Permission To Edit
+                          {% endif %}
+                      </span>
+                    </p>
+                  </footer>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    </div>
+{% endblock %}
