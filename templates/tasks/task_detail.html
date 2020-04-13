@@ -22,13 +22,22 @@
 
                 <div class="card">
                   <div class="card-content">
+                      <figure class="is-pulled-right">
+                            {% load thumbnail %}
+                            {% thumbnail object.get_poster_profile.photo "150x150" as im %}
+                                <a href="{% url "profiles:profile_detail" object.poster.id %}">
+                                    <img src="{{im.url}}" alt="User Profile Photo">
+                                </a>
+                            {% endthumbnail %}
+                        </figure>
                     <p class="title">
                       {{object.subject}}
                     </p>
                     <p class="subtitle">
-                      Raised by <a href="{% url "profiles:profile_detail" object.poster.id %}">{{ object.poster }}</a>  on {{ object.created }}
+                      Raised by <a href="{% url "profiles:profile_detail" object.poster.id %}">{{ object.poster }}</a>
+                        on {{ object.created}}
                     </p>
-                      <p class="is-small">
+                      <p class="is-small is-flex">
                           {{ object.body }}
                       </p>
                   </div>
@@ -39,13 +48,24 @@
                       </span>
                     </p>
                     <p class="card-footer-item">
-                      <span>
                         {% if object.asignee %}
-                           Assigned to: {{ object.asignee }}
+                          <span>
+                              Assigned to:
+                                <a href="{% url "profiles:profile_detail" object.asignee.id %}">
+                                    {% if object.asignee == request.user %}Me{% else %}{{ object.asignee }}{% endif %}
+                                </a>
+                          </span>
+                                {% load thumbnail %}
+                                {% thumbnail object.get_asignee_profile.photo "50x50" as im %}
+                                    <a href="{% url "profiles:profile_detail" object.asignee.id %}">
+                                        <img src="{{im.url}}" alt="Asignee Profile Photo">
+                                    </a>
+                                {% endthumbnail %}
                         {% else %}
-                          Not yet Assigned
+                            <span>
+                              Not yet Assigned
+                            </span>
                         {% endif %}
-                      </span>
                     </p>
                       <p class="card-footer-item">
                       <span>

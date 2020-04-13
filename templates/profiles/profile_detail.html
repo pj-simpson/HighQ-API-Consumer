@@ -8,7 +8,7 @@
     <section class="hero is-info welcome is-small">
         <div class="hero-body">
             <div class="container">
-                <h1 class="title">{{object.user.username }}'s Profile</h1>
+                <h1 class="title">{% if object.user == request.user %}Your{% else %}{{object.user.username }}'s{% endif %} Profile</h1>
             </div>
         </div>
     </section>
@@ -18,23 +18,68 @@
             <div class="column is-three-quarters">
                 <div class="row">
                     <div class="card">
-                          <div class="card-content">
-                            <div class="media">
-                              <div class="media-left">
-                                <figure >
-                                {% load thumbnail %}
-                                {% thumbnail object.photo "300x300" as im %}
-                                    <img src="{{im.url}}" alt="User Profile Photo">
-                                {% endthumbnail %}
+                        <header class="card-header">
+                            <div class="card-header-title">
+                                {{object.user.username}}<br>
+                                {{ object.contact_email }}<br>
+                                {{ object.phone_number|stringformat:"s" }}
+                            </div>
+                        <section class="section">
+                            <div class="card-image">
+                                <figure>
+                                  {% load thumbnail %}
+                                    {% thumbnail object.photo "150x150" as im %}
+                                        <img src="{{im.url}}" alt="Asignee Profile Photo">
+                                    {% endthumbnail %}
                                 </figure>
                               </div>
+                        </section>
+                        </header>
+
+                          <div class="card-content">
+                            <div class="media">
                               <div class="media-content">
-                                <p class="title is-4">{{profile.user.username}}</p>
-                                  <p class="subtitle is-6"><a href="mailto:{{ object.contact_email }}">{{object.contact_email}}</a></p>
+                                  <table class="table is-bordered">
+                                  <thead>
+                                    <tr>
+                                        <th>
+                                            {% if object.is_user_firstline %}
+                                                <p class="title">Issues Raised:</p>
+                                            {% elif object.is_user_secondline %}
+                                                <p class="title">Issues Assigned:</p>
+                                            {% endif %}
+                                        </th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    {% if object.is_user_firstline %}
+                                        {% for task in object.get_posted %}
+                                            <tr>
+                                                <td colspan="2">
+                                                    <p class="has-text-weight-bold"><a href="{% url "tasks:task_detail" task.id task.slug %}">{{task.subject}}</a>: </p>
+                                                    <p>{{ task.body|truncatewords:10 }} <span><a href="{% url "tasks:task_detail" task.id task.slug %}">read more</a></span></p>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% elif object.is_user_secondline %}
+                                        {% for task in object.get_assigned %}
+                                            <tr>
+                                                <td colspan="2">
+                                                    <p class="has-text-weight-bold"><a href="{% url "tasks:task_detail" task.id task.slug %}">{{task.subject}}</a>: </p>
+                                                    <p>{{ task.body|truncatewords:10 }} <span><a href="{% url "tasks:task_detail" task.id task.slug %}">read more</a></span></p>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% endif %}
+                                  </tbody>
+                                </table>
                               </div>
                             </div>
-                          </div>
-                        </div>
+
+
+
+
+
 
 
 

@@ -38,10 +38,9 @@
                                      <label for="id_asignee">Asignee:</label>
                                      <div class="select">
                                          <select name="asignee" id="id_asignee">
-                                             {% for user in object.get_possible_assignees.values %}
-                                                 <option value="{{ user.id}}">{{ user.username }}</option>
+                                             {% for user in object.get_possible_asignees %}
+                                                 <option value="{{user.id}}">{{ user.username }}</option>
                                              {% endfor %}
-
                                         </select>
                                      </div>
                                  </p>

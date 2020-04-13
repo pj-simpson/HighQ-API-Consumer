@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'registration',
     'profiles',
     'tasks',
+
     'sorl.thumbnail',
 ]
 
