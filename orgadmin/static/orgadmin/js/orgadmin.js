@@ -6,12 +6,35 @@ $("#hqOrgSearchForm").submit(function(event) {
     var orgstatusInput = $('select[name="status"]').children("option:selected"). val();
     console.log(orgstatusInput);
 
-    if (orgSearchInput) {
+    if (orgSearchInput &&! orgDomainInput) {
         // Create Ajax Call
         $.ajax( {type:"GET",
             url: decodeURI('ajax/org/'),
             data: {
                 'orgname': orgSearchInput,
+                'status': orgstatusInput,
+            },
+            dataType: 'json',
+
+            success: function (search_result) {
+                console.log(search_result)
+                if (search_result.empty_check == true){
+                    $('#hqOrgSearchForm').trigger("reset");
+                    $("#orgResultTile").empty()
+
+                    alert(search_result.message);
+                }
+                else {
+                    appendToorgresultTile(search_result);
+                }
+
+             }
+        });
+      } else if (orgDomainInput &&! orgSearchInput){
+        // Create Ajax Call
+        $.ajax( {type:"GET",
+            url: decodeURI('ajax/org/'),
+            data: {
                 'domainname': orgDomainInput,
                 'status': orgstatusInput,
             },
@@ -31,8 +54,33 @@ $("#hqOrgSearchForm").submit(function(event) {
 
              }
         });
+      } else if (orgSearchInput && orgDomainInput ){
+        // Create Ajax Call
+        $.ajax( {type:"GET",
+            url: decodeURI('ajax/org/'),
+            data: {
+                'orgname': orgSearchInput || null,
+                'domainname': orgDomainInput || null,
+                'status': orgstatusInput,
+            },
+            dataType: 'json',
+
+            success: function (search_result) {
+                console.log(search_result)
+                if (search_result.empty_check == true){
+                    $('#hqOrgSearchForm').trigger("reset");
+                    $("#orgResultTile").empty()
+
+                    alert(search_result.message);
+                }
+                else {
+                    appendToorgresultTile(search_result);
+                }
+
+             }
+        });
       } else {
-        alert("blah blah blah");
+        alert("fall through");
     }
     $('#hqOrgSearchForm').trigger("reset");
 });
@@ -61,7 +109,8 @@ $("#hqOrgSubmitForm").submit(function(event) {
     var orgSearchInput = $('input[name="orgname"]').val().trim();
     var orgURLInput = $('input[name="url"]').val().trim();
     var orgstatusInput = $('select[name="status"]').children("option:selected"). val();
-    console.log(orgstatusInput);
+    var orgDomainInput = $('input[name="orgdomain"]').val().trim();
+    console.log(orgDomainInput);
 
     if (orgSearchInput) {
         // Create Ajax Call
@@ -71,6 +120,7 @@ $("#hqOrgSubmitForm").submit(function(event) {
                 'orgname': orgSearchInput,
                 'orgurl': orgURLInput,
                 'status': orgstatusInput,
+                'orgdomain':orgDomainInput,
             },
             dataType: 'json',
 

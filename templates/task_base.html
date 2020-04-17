@@ -16,7 +16,7 @@
                     <li><a href="{% url "tasks:task_list_user" user.id %}">Assigned To Me</a></li>
                     <li><a href="{% url "tasks:task_list_unassigned"  %}">Unassigned</a></li>
                 {% endif %}
-
+                <li><a href="{% url "tasks:task_list_complete"  %}">Completed</a></li>
             </ul>
         </aside>
     </div>

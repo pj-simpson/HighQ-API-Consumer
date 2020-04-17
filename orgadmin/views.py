@@ -17,7 +17,7 @@ class HighQOrgSearch(View):
     @method_decorator(login_required)
     def get(self, request):
         search_result = {}
-        if 'orgname' in request.GET:
+        if 'orgname' in request.GET or 'domainname' in request.GET:
             form = HighQOrgSearchForm(request.GET)
             if form.is_valid():
                 search_result = form.search()

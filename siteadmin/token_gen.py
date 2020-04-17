@@ -1,10 +1,8 @@
-import pytz
 import requests
 from datetime import timedelta
 from django.utils import timezone
-from django.utils.timezone import make_aware
 
-from HighQSysAdmProj import settings
+from HighQSysAdmProj.settings import base
 from .models import OauthToken;
 
 
@@ -37,9 +35,9 @@ def token_generation():
 
 def initial_token():
     result = {}
-    url = '{instance}api/oauth2/token'.format(instance=settings.INSTANCE)
+    url = '{instance}api/oauth2/token'.format(instance=base.INSTANCE)
     headers = {'Content-Type': 'application/x-www-form-urlencoded'}
-    data = 'grant_type=authorization_code&client_id={client_id}&client_secret={client_secret}&code={code}'.format(client_id=settings.HIGHQCLIENTKEY,client_secret=settings.HIGHQCLIENTSECRET,code=settings.HIGHQCODE)
+    data = 'grant_type=authorization_code&client_id={client_id}&client_secret={client_secret}&code={code}'.format(client_id=base.HIGHQCLIENTKEY, client_secret=base.HIGHQCLIENTSECRET, code=base.HIGHQCODE)
     response = requests.post(url, headers=headers, data=data)
 
     if response.status_code == 200:
@@ -54,9 +52,9 @@ def initial_token():
 
 def refresh_token(latest_token):
     result = {}
-    url = '{instance}api/oauth2/token'.format(instance=settings.INSTANCE)
+    url = '{instance}api/oauth2/token'.format(instance=base.INSTANCE)
     headers = {'Content-Type': 'application/x-www-form-urlencoded'}
-    data = 'client_id={client_id}&client_secret={client_secret}&grant_type=refresh_token&refresh_token={refresh_token}'.format(client_id=settings.HIGHQCLIENTKEY,client_secret=settings.HIGHQCLIENTSECRET,refresh_token=latest_token.refresh_token)
+    data = 'client_id={client_id}&client_secret={client_secret}&grant_type=refresh_token&refresh_token={refresh_token}'.format(client_id=base.HIGHQCLIENTKEY, client_secret=base.HIGHQCLIENTSECRET, refresh_token=latest_token.refresh_token)
     response = requests.post(url, headers=headers, data=data)
 
     if response.status_code == 200:

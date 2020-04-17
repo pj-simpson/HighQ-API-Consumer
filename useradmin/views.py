@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.views import View
 
-from HighQSysAdmProj import settings
+from HighQSysAdmProj.settings import base
 from siteadmin.token_gen import token_generation
 from useradmin.forms import HighQUserForm
 
@@ -46,7 +46,7 @@ class HighQUserRemove(View):
         site_id = request.GET.get('site_id', '')
         user_id = int(user_id)
         endpoint = '{instance}api/3/sites/{site_id}/users'
-        url = endpoint.format(instance=settings.INSTANCE,site_id=site_id)
+        url = endpoint.format(instance=base.INSTANCE, site_id=site_id)
         headers = {'Authorization': 'Bearer %s' % token['token_result']['token'], 'Content-Type': 'application/xml','Accept': 'application/json'}
         payload="""<?xml version="1.0" encoding="UTF-8" standalone="no" ?><transactionids><transactionid>{user_id}</transactionid></transactionids>""".format(user_id=user_id)
         response = requests.delete(url, headers=headers, data=payload)
@@ -70,7 +70,7 @@ class HighQUserSiteInvite(View):
         site_id = request.GET.get('site_id','')
         user_id = int(user_id)
         endpoint = '{instance}api/3/sites/{site_id}/users/invitation'
-        url = endpoint.format(instance=settings.INSTANCE,site_id=site_id)
+        url = endpoint.format(instance=base.INSTANCE, site_id=site_id)
         headers = {'Authorization': 'Bearer %s' % token['token_result']['token'], 'Content-Type': 'application/xml', 'Accept': 'application/json'}
         payload="""<?xml version="1.0" encoding="UTF-8" standalone="no" ?><invitations><messagebody><![CDATA[Site Invite Via HighQ Sys Admin App]]></messagebody><transactionids><transactionid>{user_id}</transactionid></transactionids></invitations>""".format(user_id=user_id)
         response = requests.put(url, headers=headers, data=payload)

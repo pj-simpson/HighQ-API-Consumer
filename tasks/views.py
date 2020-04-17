@@ -17,25 +17,28 @@ class TaskCreateView(CreateView,PermissionRequiredMixin):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class TaskListView(ListView):
+class TaskListView(ListView, PermissionRequiredMixin):
     model = Task
 
     def get_queryset(self):
         qs = super().get_queryset()
-        return qs.filter(Q(asignee=self.request.user)|Q(asignee__isnull=True))
+        return qs.filter(Q(asignee=self.request.user)|Q(asignee__isnull=True)).exclude(status='complete')
 
-class TaskUnassignedListView(TaskListView):
+class TaskUnassignedListView(TaskListView,PermissionRequiredMixin):
+
     def get_queryset(self):
-        qs = super().get_queryset()
-        return qs.filter(asignee__isnull=True)
+        return self.model.objects.filter(asignee__isnull=True).exclude(status='complete')
 
-class TaskUserListView(TaskListView):
+class TaskUserListView(TaskListView,PermissionRequiredMixin):
     def get_queryset(self):
-        qs = super().get_queryset()
-        return qs.filter(asignee__id=self.kwargs['pk'])
+        return self.model.objects.filter(asignee__id=self.kwargs['pk']).exclude(status='complete')
+
+class TaskCompleteListView(TaskListView,PermissionRequiredMixin):
+    def get_queryset(self):
+        return self.model.objects.filter(status='complete')
 
 
-class TaskDetailView(DetailView):
+class TaskDetailView(DetailView,PermissionRequiredMixin):
     model = Task
 
 class TaskEditView(UpdateView,PermissionRequiredMixin):
