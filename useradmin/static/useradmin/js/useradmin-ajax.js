@@ -2,7 +2,6 @@ $("#hqUserSearchForm").submit(function(event) {
     event.preventDefault();
     $("#resultheader").empty()
     $("#sitenameLoop").empty()
-    console.log("form submitted!")
     var emailInput = $('input[name="email"]').val().trim();
     if (emailInput) {
         // Create Ajax Call
@@ -19,9 +18,6 @@ $("#hqUserSearchForm").submit(function(event) {
                 else {
                     alert(search_result.summary)
                 }
-
-
-
             }
         });
       } else {

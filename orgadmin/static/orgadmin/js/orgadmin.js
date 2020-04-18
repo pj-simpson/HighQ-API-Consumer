@@ -4,7 +4,6 @@ $("#hqOrgSearchForm").submit(function(event) {
     var orgSearchInput = $('input[name="orgname"]').val().trim();
     var orgDomainInput = $('input[name="domainname"]').val().trim();
     var orgstatusInput = $('select[name="status"]').children("option:selected"). val();
-    console.log(orgstatusInput);
 
     if (orgSearchInput &&! orgDomainInput) {
         // Create Ajax Call
@@ -17,7 +16,6 @@ $("#hqOrgSearchForm").submit(function(event) {
             dataType: 'json',
 
             success: function (search_result) {
-                console.log(search_result)
                 if (search_result.empty_check == true){
                     $('#hqOrgSearchForm').trigger("reset");
                     $("#orgResultTile").empty()
@@ -41,7 +39,6 @@ $("#hqOrgSearchForm").submit(function(event) {
             dataType: 'json',
 
             success: function (search_result) {
-                console.log(search_result)
                 if (search_result.empty_check == true){
                     $('#hqOrgSearchForm').trigger("reset");
                     $("#orgResultTile").empty()
@@ -66,7 +63,6 @@ $("#hqOrgSearchForm").submit(function(event) {
             dataType: 'json',
 
             success: function (search_result) {
-                console.log(search_result)
                 if (search_result.empty_check == true){
                     $('#hqOrgSearchForm').trigger("reset");
                     $("#orgResultTile").empty()
@@ -80,7 +76,7 @@ $("#hqOrgSearchForm").submit(function(event) {
              }
         });
       } else {
-        alert("fall through");
+        alert("Problem with the AJAX");
     }
     $('#hqOrgSearchForm').trigger("reset");
 });
@@ -110,7 +106,6 @@ $("#hqOrgSubmitForm").submit(function(event) {
     var orgURLInput = $('input[name="url"]').val().trim();
     var orgstatusInput = $('select[name="status"]').children("option:selected"). val();
     var orgDomainInput = $('input[name="orgdomain"]').val().trim();
-    console.log(orgDomainInput);
 
     if (orgSearchInput) {
         // Create Ajax Call
@@ -126,7 +121,6 @@ $("#hqOrgSubmitForm").submit(function(event) {
 
             success: function (search_result) {
                 $('#hqOrgSearchForm').trigger("reset");
-                console.log(search_result)
                 if (search_result.success == true) {
                     alert(search_result.message + search_result.name);
                 } else {
@@ -135,7 +129,7 @@ $("#hqOrgSubmitForm").submit(function(event) {
             }
         });
       } else {
-        alert("blah blah blah");
+        alert("Problem submitting the form");
     }
     $('#hqOrgSearchForm').trigger("reset");
 });

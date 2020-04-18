@@ -14,11 +14,8 @@ $("#hqSiteSearchForm").submit(function(event) {
                 $("#hqSiteSearchForm").trigger("reset");
                 $("#siteResultTile").empty();
                 alert(search_result.message);
-
-
             }
             else {
-                console.log('here we go!')
                 appendTositeresultTile(search_result);
 
             }
@@ -28,17 +25,13 @@ $("#hqSiteSearchForm").submit(function(event) {
         alert("email value must have a valid value.");
     }
     $("#hqSiteSearchForm").trigger("reset");
-
-
 });
 
 
 
 function appendTositeresultTile(search_result) {
-    console.log('inside the function !');
     $("#siteResultTile").empty();
     $.each(search_result.site, function(key, value) {
-        console.log('each site')
                  $("#siteResultTile").append(`
                 <div class="tile is-ancestor has-text-centered is-6">  
                     <div class="tile is-parent">
@@ -120,15 +113,12 @@ function sendMessage(emailMessage,userId,siteId) {
                 },
                 dataType: 'json',
                 success: function (message_result) {
-                    console.log('Returned message_result from site admin views')
-                    console.log(message_result.message)
                     if (message_result.apistatuscode) {
                         alert(message_result.apistatuscode +':' + message_result.message);
                     }
                     else {
                          alert(message_result.message);
                     }
-
                     $('#hqSiteMessage').trigger("reset");
                     $(".modal.is-active").removeClass("is-active");
 
