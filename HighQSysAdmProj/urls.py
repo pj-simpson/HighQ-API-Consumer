@@ -22,6 +22,9 @@ from django.conf.urls.static import static
 from useradmin import views
 from profiles.views import UserRegisterView
 
+from django.views.generic import RedirectView
+
+
 urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
     path('users/', include('useradmin.urls')),
@@ -31,6 +34,7 @@ urlpatterns = [
     path('tasks/', include('tasks.urls')),
     path('admin/', admin.site.urls),
     path('register/',UserRegisterView.as_view(),name='register'),
+    path('accounts/register/', RedirectView.as_view(pattern_name='register', permanent=True)),
     path('accounts/', include('registration.backends.simple.urls')),
 
 ]

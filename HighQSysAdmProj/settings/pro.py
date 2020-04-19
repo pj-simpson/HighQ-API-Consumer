@@ -14,3 +14,8 @@ DATABASES = {
     }
 }
 
+THUMBNAIL_DEBUG = False
+
+
+# local env variable for shell
+# export DJANGO_SETTINGS_MODULE=HighQSysAdmProj.settings.pro

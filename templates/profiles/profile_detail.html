@@ -9,6 +9,7 @@
         <div class="hero-body">
             <div class="container">
                 <h1 class="title">{% if object.user == request.user %}Your{% else %}{{object.user.username }}'s{% endif %} Profile</h1>
+                {% if object.user == request.user %}<a href="{% url "profiles:edit_profile"%}"><h2 class="subtitle">Edit</h2></a>{% endif %}
             </div>
         </div>
     </section>
