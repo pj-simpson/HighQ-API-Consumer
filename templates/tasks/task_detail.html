@@ -11,7 +11,7 @@
         <div class="hero-body">
             <div class="container">
                 <h2 class="subtitle"><a href="{% url "tasks:task_list" %}">Tasks...</a></h2>
-                <h1 class="title">{{ object.subject }} Details</h1>
+                <h1 class="title">"{{ object.subject }}" Details</h1>
             </div>
         </div>
     </section>
@@ -34,7 +34,7 @@
                       {{object.subject}}
                     </p>
                     <p class="subtitle">
-                      Raised by <a href="{% url "profiles:profile_detail" object.poster.id %}">{{ object.poster }}</a>
+                      Raised by <a href="{% url "profiles:profile_detail" object.poster.id %}">{{ object.poster.first_name }} {{ object.poster.last_name }}</a>
                         on {{ object.created}}
                     </p>
                       <p class="is-small is-flex">
@@ -52,7 +52,7 @@
                           <span>
                               Assigned to:
                                 <a href="{% url "profiles:profile_detail" object.asignee.id %}">
-                                    {% if object.asignee == request.user %}Me{% else %}{{ object.asignee }}{% endif %}
+                                    {% if object.asignee == request.user %}Me{% else %}{{ object.asignee.first_name }} {{ object.asignee.last_name }}{% endif %}
                                 </a>
                           </span>
                                 {% load thumbnail %}

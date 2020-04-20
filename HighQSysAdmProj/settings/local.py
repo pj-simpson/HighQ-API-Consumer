@@ -14,5 +14,7 @@ THUMBNAIL_DEBUG = True
 # local env variable for shell
 # export
 #DJANGO_SETTINGS_MODULE=HighQSysAdmProj.settings.local
+# python manage.py runserver --settings=HighQSysAdmProj.settings.local
+
 
 

@@ -11,7 +11,7 @@
             <div class="container">
                 <h2 class="subtitle"><a href="{% url "tasks:task_list" %}">Tasks...</a></h2>
                 <h2 class="subtitle"><a href="{{ task.get_absolute_url }}">{{ object.subject }} Details...</a></h2>
-                <h2 class="title">Edit {{ object.subject }}</h2>
+                <h2 class="title">Edit "{{ object.subject }}"</h2>
             </div>
         </div>
     </section>
@@ -20,11 +20,10 @@
         <div class="columns is-half is-centered">
             <div class="column is-8">
                  <div class="row">
-                        <form role="form" method="post" action=".">
+                        <form action="." method="post" role="form">
                             {% csrf_token %}
-                            <div>
                                 <div class="field">
-                                 <p>
+                                 <p class="control">
                                      <label for="id_status">Status:</label>
                                      <div class="select">
                                          <select name="status" id="id_status">
@@ -34,18 +33,19 @@
                                         </select>
                                      </div>
                                  </p>
-                                <p>
+                                </div>
+                                <div class="field">
+                                <p class="control">
                                      <label for="id_asignee">Asignee:</label>
                                      <div class="select">
                                          <select name="asignee" id="id_asignee">
                                              {% for user in object.get_possible_asignees %}
-                                                 <option value="{{user.id}}">{{ user.username }}</option>
+                                                 <option value="{{user.id}}">{{ user.first_name }} {{ user.last_name }}</option>
                                              {% endfor %}
                                         </select>
                                      </div>
                                  </p>
                              </div>
-                            </div>
                             <div class="field">
                                 <p class="control">
                                     <button type="submit" class="button is-primary">Submit</button>
