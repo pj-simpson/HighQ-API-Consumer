@@ -3,11 +3,14 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from django.apps import apps
+
+from phonenumber_field.modelfields import PhoneNumberField
+
 import tasks as T
 
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='user_profile')
-    phone_number = models.IntegerField(blank=True,null=True,max_length=20)
+    phone_number = PhoneNumberField(blank=True, default='')
     contact_email = models.EmailField(blank=True)
     photo = models.ImageField(upload_to='users/%Y/%m/%d/', blank=True)
 
@@ -24,3 +27,4 @@ class Profile(models.Model):
 
     def get_assigned(self):
         return T.models.Task.objects.all().filter(asignee_id=self.user_id)
+

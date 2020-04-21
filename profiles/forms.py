@@ -1,5 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
+from phonenumber_field.widgets import PhoneNumberPrefixWidget
+
 from .models import Profile
 
 class UserRegistrationForm(forms.ModelForm):
@@ -21,6 +23,7 @@ class UserRegistrationForm(forms.ModelForm):
 
 
 class ProfileEditForm(forms.ModelForm):
+
     class Meta:
         model = Profile
         fields = ['photo','contact_email','phone_number']

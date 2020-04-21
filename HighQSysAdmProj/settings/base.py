@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'tasks',
 
     'sorl.thumbnail',
+    'phonenumber_field',
 ]
 
 MIDDLEWARE = [
@@ -143,4 +144,7 @@ LOGIN_URL = 'auth_login'
 CRON_CLASSES = [
     "siteadmin.cron.OauthCronJob"
 ]
+
+PHONENUMBER_DB_FORMAT = 'NATIONAL'
+
 

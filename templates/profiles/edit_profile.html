@@ -23,30 +23,35 @@
 
                             <div class="field">
 
-                                <div class="file">
+                                <div id="file-photo-input" class="file is-centered is-boxed has-name">
                                   <label class="file-label">
                                     <input class="file-input" type="file" name="photo" accept="image/*" id="id_photo" >
                                     <span class="file-cta">
                                       <span class="file-icon">
-                                        <i class="fa fa-cloud-upload"></i>
+                                        <i class="fas fa-cloud-upload-alt"></i>
                                       </span>
                                       <span class="file-label">
                                         Choose a Photo…
                                       </span>
                                     </span>
+                                      <span class="file-name">
+                                         {% if profile_form.initial.photo.name %}{{ profile_form.initial.photo.name }}{% else %}No File Selected{% endif %}
+                                      </span>
                                   </label>
                                 </div>
                             </div>
 
                             <div class="field">
                                 <p class="control">
-                                    <input type="email" name="contact_email" maxlength="254" id="id_contact_email" class="input form-control" placeholder="Contact Email">
+                                    <input type="email" name="contact_email" maxlength="254" id="id_contact_email" class="input form-control"
+                                           {% if profile_form.initial.contact_email %}value="{{ profile_form.initial.contact_email }}"{% else %}placeholder="Contact Email"{% endif %}>
                                 </p>
                             </div>
 
                             <div class="field">
                                 <p class="control">
-                                    <input type="number" name="phone_number" class="input form-control" id="id_phone_number" placeholder="Phone number">
+                                    <input type="text" name="phone_number" class="input form-control" id="id_phone_number"
+                                           {% if profile_form.initial.phone_number %}value="{{ profile_form.initial.phone_number }}"{% else %}value="+44..."{% endif %}>
                                 </p>
                             </div>
 
@@ -65,7 +70,21 @@
 
     </div>
 
+    <script>
+    // file input on edit profile
+  const fileInput = document.querySelector('#file-photo-input input[type=file]');
+  fileInput.onchange = () => {
+      console.log('file detected')
+    if (fileInput.files.length > 0) {
+      const fileName = document.querySelector('#file-photo-input .file-name');
+      fileName.textContent = fileInput.files[0].name;
+    }
+  }
+</script>
+
 {% endblock %}
+
+
 
 
 
