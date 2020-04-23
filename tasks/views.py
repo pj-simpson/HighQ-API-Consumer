@@ -1,9 +1,18 @@
+import requests
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
+from django.utils.decorators import method_decorator
+from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.db.models import Q
+from HighQSysAdmProj.settings import base
+
+
+from siteadmin.token_gen import token_generation
 from .models import Task
+from .forms import TaskCollabPushForm
 
 
 class TaskCreateView(CreateView,PermissionRequiredMixin):
@@ -46,3 +55,29 @@ class TaskEditView(UpdateView,PermissionRequiredMixin):
     fields = ['status', 'asignee']
     success_url = '/tasks/'
 
+class TaskPushToCollabView(View):
+
+    @method_decorator(login_required)
+    def get(self, request,pk,post):
+        form = TaskCollabPushForm()
+        return render(request, 'tasks/task_push_form.html', {'form': form})
+
+    @method_decorator(login_required)
+    def post(self, request, pk, post):
+        form = TaskCollabPushForm()
+        return render(request, 'tasks/task_push_form.html', {'form': form})
+
+class TasksGetSiteTaskList(View):
+
+    @method_decorator(login_required)
+    def get(self, request,pk,post):
+        token = token_generation()
+        result = {}
+        site_id = request.GET.get('siteid', '')
+        endpoint = '{instance}api/3/tasks/lists?siteid={site_id}'
+        url = endpoint.format(instance=base.INSTANCE,site_id=site_id)
+        headers = {'Authorization': 'Bearer %s' % token['token_result']['token'], 'Accept': 'application/json'}
+        response = requests.get(url, headers=headers)
+        if response.status_code == 200:
+            result = response.json()
+            return JsonResponse(result)

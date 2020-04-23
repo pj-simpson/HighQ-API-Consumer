@@ -16,5 +16,9 @@ urlpatterns = [
     path('edit/<int:pk>/<slug:post>/',
          views.TaskEditView.as_view(),
          name='task_edit'),
+    path('push/<int:pk>/<slug:post>/',
+         views.TaskPushToCollabView.as_view(),
+         name='task_push'),
+    path('push/<int:pk>/<slug:post>/ajax/task_list/', views.TasksGetSiteTaskList.as_view(), name='ajax_site_task_list'),
 
 ]
