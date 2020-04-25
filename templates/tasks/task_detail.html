@@ -12,6 +12,7 @@
             <div class="container">
                 <h2 class="subtitle"><a href="{% url "tasks:task_list" %}">Tasks...</a></h2>
                 <h1 class="title">"{{ object.subject }}" Details</h1>
+                {% if request.user|has_group:"Second Line" and not object.ispushed %}<a href="{% url "tasks:task_push" object.pk object.slug %}"class="button is-primary is-outlined"><h2 class="subtitle">Push Task To Collaborate</h2></a>{% endif %}
             </div>
         </div>
     </section>

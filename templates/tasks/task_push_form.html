@@ -21,7 +21,34 @@
                  <div class="row">
                         <form role="form" method="post" action=".">
                             {% csrf_token %}
-                            {{ form.as_p }}
+
+
+                            <div class="field">
+                                <p class="control">
+                                    <label for="id_site">Site:</label>
+                                        <div class="select">
+                                            <select name="site" id="id_site">
+                                                 {% for value,label in form.fields.site.choices %}
+                                                     <option value="{{value}}">{{label}}</option>
+                                                 {% endfor %}
+                                            </select>
+                                        </div>
+                                </p>
+                            </div>
+
+                            <div class="field">
+                                <p class="control">
+                                    <label for="id_task_list">Task List:</label>
+                                        <div class="select">
+                                            <select name="task_list" id="id_task_list">
+                                                 {% for value,label in form.fields.task_list.choices %}
+                                                     <option value="{{value}}">{{label}}</option>
+                                                 {% endfor %}
+                                            </select>
+                                        </div>
+                                </p>
+                            </div>
+
                             <div class="field">
                                 <p class="control">
                                     <button type="submit" class="button is-primary">Submit</button>
@@ -34,3 +61,4 @@
     </section>
     </div>
 {% endblock %}
+

@@ -1,0 +1,30 @@
+{% extends 'task_base.html' %}
+
+{% block title_block %}
+    Task Push Success
+{% endblock %}
+
+{% block body_block %}
+   <section class="hero is-info welcome is-small">
+        <div class="hero-body">
+            <div class="container">
+                <h2 class="subtitle"><a href="{% url "tasks:task_list" %}">Tasks...</a></h2>
+                <h1 class="title">Task Push Success </h1>
+            </div>
+        </div>
+    </section>
+
+       <section class="section">
+        <div class="columns is-one-quarter is-centered">
+            <div class="column">
+                <div class="row">
+
+                    <p>You have successfully pushed the <a href="{{ task.get_absolute_url}}">{{task.subject}}</a> to Collaborate!</p>
+
+                </div>
+            </div>
+        </div>
+       </section>
+        </div>
+
+{% endblock %}

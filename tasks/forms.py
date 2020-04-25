@@ -26,7 +26,7 @@ def get_sites_with_tasks():
 class TaskCollabPushForm(forms.Form):
 
     initial_tasks = (("",""),("",""))
-    sites = forms.ChoiceField(choices=tuple(get_sites_with_tasks()))
+    site = forms.ChoiceField(choices=tuple(get_sites_with_tasks()))
     task_list = forms.ChoiceField(choices=initial_tasks)
 
 

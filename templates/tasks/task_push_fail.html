@@ -1,0 +1,30 @@
+{% extends 'task_base.html' %}
+
+{% block title_block %}
+    Task Push Failure
+{% endblock %}
+
+{% block body_block %}
+   <section class="hero is-info welcome is-small">
+        <div class="hero-body">
+            <div class="container">
+                <h2 class="subtitle"><a href="{% url "tasks:task_list" %}">Tasks...</a></h2>
+                <h1 class="title">Task Push Failure</h1>
+            </div>
+        </div>
+    </section>
+
+       <section class="section">
+        <div class="columns is-one-quarter is-centered">
+            <div class="column">
+                <div class="row">
+
+                    <p>Whoops! Looks like pushing that task to collaborate failed. Get <strong>Big Pete Simpo</strong> to debug his code!</p>
+
+                </div>
+            </div>
+        </div>
+       </section>
+        </div>
+
+{% endblock %}

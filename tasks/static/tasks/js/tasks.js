@@ -1,4 +1,4 @@
-$("#id_sites").change(function(event) {
+$("#id_site").change(function(event) {
     var siteId = $(this).children("option:selected").val();
     if (siteId) {
         // Create Ajax Call
@@ -14,7 +14,7 @@ $("#id_sites").change(function(event) {
                 $('#id_task_list').empty();
 
                 $.each(result.list,function(key, value) {
-                    $("#id_task_list").append(`<option value="+${value.listid}+">${value.listname}</option>`);
+                    $("#id_task_list").append(`<option value="${value.listid}">${value.listname}</option>`);
 
                 });
 
