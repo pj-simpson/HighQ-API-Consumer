@@ -10,7 +10,6 @@ $("#id_site").change(function(event) {
             dataType: 'json',
             success: function (result) {
 
-                console.log(result)
                 $('#id_task_list').empty();
 
                 $.each(result.list,function(key, value) {
@@ -22,6 +21,18 @@ $("#id_site").change(function(event) {
             }
         });
       } else {
-        alert("Error With Tasks JQuery");
+        alert("Please select a site");
     }
 });
+
+// Prevent submitting a form without a siteId
+
+$("#pushToCol").submit(function(event) {
+    var siteId = $("#id_site").children("option:selected").val();
+
+    if(!siteId) {
+        event.preventDefault();
+        alert("You cannot submit this form without a site selected!");
+    }
+});
+

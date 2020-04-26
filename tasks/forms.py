@@ -15,7 +15,7 @@ def get_sites_with_tasks():
         result = response.json()
         # make result a list of dicts
         result = result['site']
-        list = []
+        list = [("", "")]
         for i in result:
             if i['module']['task']['enable'] == '1':
                 list.append((i['id'], i['sitename']))
