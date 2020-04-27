@@ -1,7 +1,9 @@
 import requests
 import json
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.decorators import method_decorator
@@ -17,10 +19,11 @@ from .forms import TaskCollabPushForm
 from .get_task_statuses import get_task_status
 
 
-class TaskCreateView(CreateView,PermissionRequiredMixin):
+class TaskCreateView(SuccessMessageMixin,CreateView,PermissionRequiredMixin ):
     model = Task
     fields = ['subject','body']
     template_name_suffix ='_create_form'
+    success_message = "Task Successfully created!"
 
     def form_valid(self,form):
         form.instance.poster = self.request.user
@@ -57,19 +60,6 @@ class TaskEditView(UpdateView,PermissionRequiredMixin):
     fields = ['status', 'asignee']
     success_url = '/tasks/'
 
-class TaskPushSuccessView(View):
-
-    @method_decorator(login_required)
-    def get(self,request,pk,post):
-        task = get_object_or_404(Task,pk=pk)
-        return render(request,'tasks/task_push_success.html',{'task':task})
-
-class TaskPushFailureView(View):
-
-    @method_decorator(login_required)
-    def get(self,request,pk,post):
-        task = get_object_or_404(Task,pk=pk)
-        return render(request,'tasks/task_push_fail.html',{'task':task})
 
 class TaskPushToCollabView(View):
 
@@ -99,7 +89,7 @@ class TaskPushToCollabView(View):
                                   "status":{"statusid":get_task_status(site_id)},
                                     "startdate": task.created.__str__(),
                                     "tags": {"tag": [{"tagname": "Pushed From HighQSysAdminApp"}]}})
-            # create the token later
+            # we create the token later
             token = token_generation()
             headers = {'Authorization': 'Bearer %s' % token['token_result']['token'], 'Accept': 'application/json',
                        'Content-Type': 'application/json'}
@@ -109,13 +99,11 @@ class TaskPushToCollabView(View):
                 result = response.json()
                 task.ispushed = True
                 task.save()
-                return redirect('tasks:task_push_success',pk=task.pk,post=task.slug)
+                messages.success(request,'Task Successfully Pushed To Collaborate')
+                return redirect('tasks:task_list')
             else:
-                return redirect('tasks:task_push_failure', pk=task.pk, post=task.slug)
-
-
-
-
+                messages.error(request, 'Task Successfully Pushed To Collaborate')
+                return redirect('tasks:task_list')
 
 class TasksGetSiteTaskList(View):
 
@@ -132,4 +120,20 @@ class TasksGetSiteTaskList(View):
             result = response.json()
             return JsonResponse(result)
 
+
+
+# Task push success and failure views made redundant - using the django messges framework instead.
+# class TaskPushSuccessView(View):
+#
+#     @method_decorator(login_required)
+#     def get(self,request,pk,post):
+#         task = get_object_or_404(Task,pk=pk)
+#         return render(request,'tasks/task_push_success.html',{'task':task})
+#
+# class TaskPushFailureView(View):
+#
+#     @method_decorator(login_required)
+#     def get(self,request,pk,post):
+#         task = get_object_or_404(Task,pk=pk)
+#         return render(request,'tasks/task_push_fail.html',{'task':task})
 

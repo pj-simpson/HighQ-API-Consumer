@@ -29,7 +29,7 @@ class Task(models.Model):
     updated = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=12,choices=Status.choices,
                               default=Status.NEW)
-    ispushed = models.BooleanField(default=True)
+    ispushed = models.BooleanField(default=False)
 
 
     class Meta:

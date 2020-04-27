@@ -15,6 +15,11 @@
         </div>
     </section>
 
+    {% if messages %}
+        {% include 'tasks/messages.html' %}
+    {% endif %}
+
+
     <section class="section">
         <div class="columns is-half is-centered">
             <div class="column is-8">

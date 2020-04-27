@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 from decouple import config, Csv
+from django.contrib.messages import constants as messages
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -68,6 +69,9 @@ ROOT_URLCONF = 'HighQSysAdmProj.urls'
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS =[STATIC_DIR,]
+
+STATIC_ROOT = '/home/PeterJosephSimpson/HighQ-API-Consumer/static'
+
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = MEDIA_DIR
@@ -146,5 +150,14 @@ CRON_CLASSES = [
 ]
 
 PHONENUMBER_DB_FORMAT = 'NATIONAL'
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'is-info',
+    messages.INFO: 'is-info',
+    messages.SUCCESS: 'is-success',
+    messages.WARNING: 'is-warning',
+    messages.ERROR: 'is-danger',
+
+}
 
 

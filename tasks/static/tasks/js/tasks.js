@@ -36,3 +36,10 @@ $("#pushToCol").submit(function(event) {
     }
 });
 
+
+// messages delete.
+
+$("#closeMessage").click(function(){
+        console.log('logged!');
+        $("#messagesSection").remove();
+});
