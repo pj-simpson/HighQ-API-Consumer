@@ -11,7 +11,7 @@ class HighQOrgSearchPage(View):
     @method_decorator(login_required)
     def get(self, request):
         form = HighQOrgSearchForm()
-        return render(request, 'orgadmin/orgsearch.html', {'form': form})
+        return render(request, 'orgadmin/orgsearch.html', {'form': form, 'nav':'col'})
 
 class HighQOrgSearch(View):
     @method_decorator(login_required)
@@ -29,7 +29,7 @@ class HighQOrgSubmitPage(View):
     @method_decorator(login_required)
     def get(self, request):
         form = HighQOrgSubmitForm()
-        return render(request, 'orgadmin/orgsubmit.html', {'form': form})
+        return render(request, 'orgadmin/orgsubmit.html', {'form': form, 'nav':'col'})
 
 class HighQOrgSubmit(View):
     @method_decorator(login_required)

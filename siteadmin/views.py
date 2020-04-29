@@ -12,7 +12,7 @@ class HighQSiteSearchPage(View):
     def get(self,request):
         form = HighQSiteForm()
         form2 = HighQSiteOwnerMessage()
-        return render(request, 'siteadmin/site_search.html', {'form': form, 'form2':form2})
+        return render(request, 'siteadmin/site_search.html', {'form': form, 'form2':form2, 'nav':'col'})
 
 class HighQSiteSearch(View):
     @method_decorator(login_required)

@@ -42,7 +42,7 @@
                     {% if user.is_authenticated %}
                         {% if user|has_group:"First Line" %}
                         <div class="navbar-item has-dropdown is-hoverable">
-                            <a class="navbar-link">
+                            <a class="navbar-link {% if nav == 'col' %} is-active{% endif %}">
                               Collaborate
                             </a>
                             <div class="navbar-dropdown">
@@ -52,9 +52,7 @@
                             </div>
                         </div>
                         {% endif %}
-                        <div class="navbar-item has-dropdown is-hoverable">
-                            <a class="navbar-item" href="{% url 'tasks:task_list' %}">Tasks</a>
-                        </div>
+                            <a class="navbar-item is-hoverable {% if nav == 'tasks' %}is-active{% endif %} " href="{% url 'tasks:task_list' %}">Tasks</a>
                     {% endif %}
                 </div>
                 <div class="navbar-end">
@@ -110,7 +108,10 @@
     <script src="{% static "orgadmin/js/orgadmin.js" %}"></script>
     <script src="{% static "tasks/js/tasks.js" %}"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-
+{#    ck editor stuff#}
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
 
 
 {% endblock javascript %}

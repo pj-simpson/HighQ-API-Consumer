@@ -43,7 +43,7 @@
                         on {{ object.created}}
                     </p>
                       <p class="is-small is-flex">
-                          {{ object.body }}
+                          {{ object.body|safe }}
                       </p>
                   </div>
                   <footer class="card-footer">

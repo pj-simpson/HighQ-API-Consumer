@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 
 from profiles.models import Profile
 from django.urls import reverse
+from ckeditor_uploader.fields import RichTextUploadingField
 
 
 class Task(models.Model):
@@ -24,7 +25,8 @@ class Task(models.Model):
     asignee = models.ForeignKey(User,
                                on_delete=models.CASCADE,
                                related_name='tasks_assigned', null=True)
-    body = models.TextField()
+    # body = models.TextField()
+    body = RichTextUploadingField()
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=12,choices=Status.choices,

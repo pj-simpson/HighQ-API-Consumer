@@ -14,6 +14,10 @@
         </div>
     </section>
 
+    {% if messages %}
+        {% include 'tasks/messages.html' %}
+    {% endif %}
+
        <section class="section">
         <div class="columns is-one-quarter is-centered">
             <div class="column is-three-quarters">

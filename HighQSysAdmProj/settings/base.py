@@ -52,6 +52,7 @@ INSTALLED_APPS = [
 
     'sorl.thumbnail',
     'phonenumber_field',
+    'ckeditor',
 ]
 
 MIDDLEWARE = [
@@ -158,6 +159,24 @@ MESSAGE_TAGS = {
     messages.WARNING: 'is-warning',
     messages.ERROR: 'is-danger',
 
+}
+
+CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
+
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+CKEDITOR_IMAGE_BACKEND = "pillow"
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': [["Format", "Bold", "Italic", "Underline", "Strike", "SpellChecker"],
+                ['NumberedList', 'BulletedList', "Indent", "Outdent", 'JustifyLeft', 'JustifyCenter',
+                 'JustifyRight', 'JustifyBlock'],
+                [ "Table", "Link", "Unlink", "Anchor", "SectionLink", "Subscript", "Superscript"], ['Undo', 'Redo'], ["Source"],
+                ["Maximize"]],
+        'height': 300,
+        'width': 500,
+
+    },
 }
 
 

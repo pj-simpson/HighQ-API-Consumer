@@ -25,10 +25,19 @@ class TaskCreateView(SuccessMessageMixin,CreateView,PermissionRequiredMixin ):
     template_name_suffix ='_create_form'
     success_message = "Task Successfully created!"
 
+
     def form_valid(self,form):
         form.instance.poster = self.request.user
         super(TaskCreateView, self).form_valid(form)
         return HttpResponseRedirect(self.get_success_url())
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['nav'] = 'tasks'
+        context['menu'] = 'create'
+        return context
+
+
 
 
 class TaskListView(ListView, PermissionRequiredMixin):
@@ -38,27 +47,71 @@ class TaskListView(ListView, PermissionRequiredMixin):
         qs = super().get_queryset()
         return qs.filter(Q(asignee=self.request.user)|Q(asignee__isnull=True)).exclude(status='complete')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['nav'] = 'tasks'
+        context['menu'] = 'list'
+        return context
+
 class TaskUnassignedListView(TaskListView,PermissionRequiredMixin):
 
     def get_queryset(self):
         return self.model.objects.filter(asignee__isnull=True).exclude(status='complete')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['nav'] = 'tasks'
+        context['menu'] = 'unassigned'
+        return context
+
+
+
 class TaskUserListView(TaskListView,PermissionRequiredMixin):
     def get_queryset(self):
         return self.model.objects.filter(asignee__id=self.kwargs['pk']).exclude(status='complete')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['nav'] = 'tasks'
+        context['menu'] = 'me'
+        return context
+
+
 
 class TaskCompleteListView(TaskListView,PermissionRequiredMixin):
     def get_queryset(self):
         return self.model.objects.filter(status='complete')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['nav'] = 'tasks'
+        context['menu'] = 'complete'
+        return context
+
+
+
 
 class TaskDetailView(DetailView,PermissionRequiredMixin):
     model = Task
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['nav'] = 'tasks'
+        return context
+
+
 
 class TaskEditView(UpdateView,PermissionRequiredMixin):
     model = Task
     fields = ['status', 'asignee']
     success_url = '/tasks/'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['nav'] = 'tasks'
+        return context
+
+
 
 
 class TaskPushToCollabView(View):
@@ -67,14 +120,19 @@ class TaskPushToCollabView(View):
     def get(self, request,pk,post):
         form = TaskCollabPushForm()
         task = get_object_or_404(Task, pk=pk)
-        return render(request, 'tasks/task_push_form.html',{'form': form})
+        return render(request, 'tasks/task_push_form.html',{'form': form, 'nav':'tasks'})
 
     @method_decorator(login_required)
     def post(self, request, pk, post):
 
         task = get_object_or_404(Task,pk=pk)
-
         form = TaskCollabPushForm(request.POST)
+
+        def get_context_data(self, **kwargs):
+            context = super().get_context_data(**kwargs)
+            context['nav'] = 'tasks'
+            return context
+
         if form:
 
             result = {}
@@ -120,20 +178,4 @@ class TasksGetSiteTaskList(View):
             result = response.json()
             return JsonResponse(result)
 
-
-
-# Task push success and failure views made redundant - using the django messges framework instead.
-# class TaskPushSuccessView(View):
-#
-#     @method_decorator(login_required)
-#     def get(self,request,pk,post):
-#         task = get_object_or_404(Task,pk=pk)
-#         return render(request,'tasks/task_push_success.html',{'task':task})
-#
-# class TaskPushFailureView(View):
-#
-#     @method_decorator(login_required)
-#     def get(self,request,pk,post):
-#         task = get_object_or_404(Task,pk=pk)
-#         return render(request,'tasks/task_push_fail.html',{'task':task})
 

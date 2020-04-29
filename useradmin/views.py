@@ -22,7 +22,7 @@ class HighQUserSearchPage(View):
     @method_decorator(login_required)
     def get(self,request):
         form = HighQUserForm()
-        return render(request, 'useradmin/user_search.html', {'form': form})
+        return render(request, 'useradmin/user_search.html', {'form': form,'nav':'col'})
 
 # view for the ajax call which fetches the search results
 class HighQUserSearch(View):

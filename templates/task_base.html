@@ -9,14 +9,14 @@
                 Tasks
             </p>
             <ul class="menu-list">
-                <li><a href="{% url "tasks:task_list" %}">Task List</a></li>
+                <li><a class="{% if menu == 'list' %} is-active{% endif %}" href="{% url "tasks:task_list" %}">Task List</a></li>
                 {% if user|has_group:"First Line" %}
-                    <li><a href="{% url "tasks:task_create" %}">Create New Task</a></li>
+                    <li><a class="{% if menu == 'create' %} is-active{% endif %}" href="{% url "tasks:task_create" %}">Create New Task</a></li>
                 {% elif user|has_group:"Second Line" %}
-                    <li><a href="{% url "tasks:task_list_user" user.id %}">Assigned To Me</a></li>
-                    <li><a href="{% url "tasks:task_list_unassigned"  %}">Unassigned</a></li>
+                    <li><a class="{% if menu == 'me' %} is-active{% endif %}" href="{% url "tasks:task_list_user" user.id %}">Assigned To Me</a></li>
+                    <li><a class="{% if menu == 'unassigned' %} is-active{% endif %}" href="{% url "tasks:task_list_unassigned"  %}">Unassigned</a></li>
                 {% endif %}
-                <li><a href="{% url "tasks:task_list_complete"  %}">Completed</a></li>
+                <li><a class="{% if menu == 'complete' %} is-active{% endif %}" href="{% url "tasks:task_list_complete"  %}">Completed</a></li>
             </ul>
         </aside>
     </div>

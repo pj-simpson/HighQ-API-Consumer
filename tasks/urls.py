@@ -20,8 +20,6 @@ urlpatterns = [
     path('push/<int:pk>/<slug:post>/',
          views.TaskPushToCollabView.as_view(),
          name='task_push'),
-    # path('push/success/<int:pk>/<slug:post>/success',TaskPushSuccessView.as_view(),name='task_push_success'),
-    # path('push/success/<int:pk>/<slug:post>/success',TaskPushFailureView.as_view(),name='task_push_failure'),
     path('push/<int:pk>/<slug:post>/ajax/task_list/', views.TasksGetSiteTaskList.as_view(), name='ajax_site_task_list'),
 
 ]
