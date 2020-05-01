@@ -1,0 +1,78 @@
+{% extends 'task_base.html' %}
+
+{% load static %}
+
+{% block title_block %}
+    Recent Activity
+{% endblock %}
+
+{% block body_block %}
+    <section class="hero is-info welcome is-small">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">Recent Activity...</h1>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="columns is-half is-centered">
+            <div class="infinite-container column is-8 ">
+                {% for action in actions %}
+                 <div class=" infinite-item tile is-ancestor">
+                  <div class="tile is-vertical">
+                    <div class="tile">
+                      <div class="tile is-parent is-vertical">
+
+
+                        <article class="tile is-child box">
+                            <figure class="is-pulled-left">
+                            {% load thumbnail %}
+                            {% thumbnail action.user.user_profile.photo "150x150" as im %}
+                                <a href="{% url "profiles:profile_detail" action.user_id %}">
+                                    <img src="{{im.url}}" alt="User Profile Photo">
+                                </a>
+                            {% endthumbnail %}
+                        </figure>
+                          <p class="subtitle">
+                              <a href="{% url "profiles:profile_detail" action.user_id %}">
+                                    {{ action.user.first_name }} {{ action.user.last_name }}
+                              </a>
+                                    {{action.verb}}
+                              {% if not action.target_ct_id == 11 %}
+                                  <a href="{{action.get_task_url}}">
+                                    {{ action.target }}
+                                  </a>
+                              {% endif %}
+
+
+                          </p>
+                        </article>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}">
+                    </a>
+
+                {% endif %}
+
+                <div class="loading" style="display: none;">
+                    <button class="button is-disabled is-info is-large is-fullwidth is-loading">Loading...</button>
+                </div>
+
+
+
+            </div>
+
+
+
+        </div>
+    </section>
+    </div>
+
+
+{% endblock %}

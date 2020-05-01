@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'registration',
     'profiles',
     'tasks',
+    'actions',
 
     'sorl.thumbnail',
     'phonenumber_field',

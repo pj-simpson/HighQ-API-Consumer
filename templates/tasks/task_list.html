@@ -22,15 +22,15 @@
 
     <section class="section">
         <div class="columns is-half is-centered">
-            <div class="column is-8">
+            <div class="infinite-container column is-8 ">
                 {% for task in task_list %}
-                 <div class="tile is-ancestor">
+                 <div class=" infinite-item tile is-ancestor">
                   <div class="tile is-vertical">
                     <div class="tile">
                       <div class="tile is-parent is-vertical">
                         <article class="tile is-child box">
                           <p class="title">{{task.subject}}</p>
-                          <p class="subtitle">{{task.body|truncatewords:12}}</p>
+                          <p class="subtitle">{{task.body|striptags|slice:':70'}}...</p>
                             <a href="{{ task.get_absolute_url }}">Read More...</a>
                         </article>
                       </div>
@@ -38,10 +38,28 @@
                   </div>
                 </div>
                 {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}">
+                    </a>
+
+                {% endif %}
+
+                <div class="loading" style="display: none;">
+                    <button class="button is-info is-disabled is-large is-fullwidth is-loading">Loading</button>
+                </div>
+
+
+
             </div>
+
+
+
         </div>
     </section>
     </div>
+
+
 {% endblock %}
 
 

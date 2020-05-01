@@ -32,6 +32,7 @@ urlpatterns = [
     path('orgs/', include('orgadmin.urls')),
     path('profile/', include('profiles.urls')),
     path('tasks/', include('tasks.urls')),
+    path('activity/', include('actions.urls')),
     path('admin/', admin.site.urls),
     path('register/',UserRegisterView.as_view(),name='register'),
     path('accounts/register/', RedirectView.as_view(pattern_name='register', permanent=True)),

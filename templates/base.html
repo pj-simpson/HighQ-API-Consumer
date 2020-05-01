@@ -23,6 +23,7 @@
         <link rel="stylesheet" href="https://unpkg.com/bulma@0.8.0/css/bulma.min.css" />
         <link rel="stylesheet" href="/static/useradmin/css/admin.css">
 
+
     </head>
 
     <body>
@@ -53,6 +54,7 @@
                         </div>
                         {% endif %}
                             <a class="navbar-item is-hoverable {% if nav == 'tasks' %}is-active{% endif %} " href="{% url 'tasks:task_list' %}">Tasks</a>
+                            <a class="navbar-item is-hoverable {% if nav == 'activity' %}is-active{% endif %} " href="{% url 'actions:activity' %}">Activity</a>
                     {% endif %}
                 </div>
                 <div class="navbar-end">
@@ -107,11 +109,28 @@
     <script src="{% static "siteadmin/js/siteadmin-ajax.js" %}"></script>
     <script src="{% static "orgadmin/js/orgadmin.js" %}"></script>
     <script src="{% static "tasks/js/tasks.js" %}"></script>
+
+    <script src="{% static "tasks/js/jquery.waypoints.min.js" %}"></script>
+    <script src="{% static "tasks/js/infinite.min.js" %}"></script>
+
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 {#    ck editor stuff#}
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
     <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+
+
+    <script>
+        var infinite = new Waypoint.Infinite({
+      element: $('.infinite-container')[0],
+      onBeforePageLoad: function () {
+        $('.loading').show();
+      },
+      onAfterPageLoad: function ($items) {
+        $('.loading').hide();
+      }
+    });
+    </script>
 
 
 {% endblock javascript %}

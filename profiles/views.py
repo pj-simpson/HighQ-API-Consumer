@@ -8,6 +8,7 @@ from django.views import View
 from django.views.generic import DetailView
 from .forms import ProfileEditForm, UserRegistrationForm
 from .models import Profile
+from actions.utils import create_action
 
 class UserRegisterView(View):
 
@@ -25,6 +26,7 @@ class UserRegisterView(View):
                                     password=user_form.cleaned_data['password1'],
                                     )
             login(request, new_user)
+            create_action(request.user, 'joined the system.', new_user)
         return render(request,
                           'registration/register_done.html',
                           {'new_user': new_user})
@@ -44,6 +46,7 @@ class EditProfileView(View,LoginRequiredMixin):
                                        files=request.FILES)
         if profile_form.is_valid():
             profile_form.save()
+            create_action(request.user, 'update their profile.', profile)
             messages.success(request, 'Profile updated successfully')
         else:
             messages.error(request, 'Error updating your profile')

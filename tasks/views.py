@@ -11,6 +11,8 @@ from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.db.models import Q
 from HighQSysAdmProj.settings import base
+from actions.utils import create_action
+
 
 
 from siteadmin.token_gen import token_generation
@@ -29,6 +31,7 @@ class TaskCreateView(SuccessMessageMixin,CreateView,PermissionRequiredMixin ):
     def form_valid(self,form):
         form.instance.poster = self.request.user
         super(TaskCreateView, self).form_valid(form)
+        create_action(self.request.user, 'just raised a new issue:', self.object)
         return HttpResponseRedirect(self.get_success_url())
 
     def get_context_data(self, **kwargs):
@@ -42,6 +45,7 @@ class TaskCreateView(SuccessMessageMixin,CreateView,PermissionRequiredMixin ):
 
 class TaskListView(ListView, PermissionRequiredMixin):
     model = Task
+    paginate_by = 5
 
     def get_queryset(self):
         qs = super().get_queryset()
@@ -105,11 +109,17 @@ class TaskEditView(UpdateView,PermissionRequiredMixin):
     model = Task
     fields = ['status', 'asignee']
     success_url = '/tasks/'
+    success_message = "Task Successfully updated!"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['nav'] = 'tasks'
         return context
+
+    def form_valid(self,form):
+        super(TaskEditView, self).form_valid(form)
+        create_action(self.request.user, 'just updated an issue:', self.object)
+        return HttpResponseRedirect(self.get_success_url())
 
 
 
@@ -157,6 +167,7 @@ class TaskPushToCollabView(View):
                 result = response.json()
                 task.ispushed = True
                 task.save()
+                create_action(request.user, 'just pushed a task to collaborate:', task)
                 messages.success(request,'Task Successfully Pushed To Collaborate')
                 return redirect('tasks:task_list')
             else:

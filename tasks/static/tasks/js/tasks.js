@@ -43,3 +43,6 @@ $("#closeMessage").click(function(){
         console.log('logged!');
         $("#messagesSection").remove();
 });
+
+
+
