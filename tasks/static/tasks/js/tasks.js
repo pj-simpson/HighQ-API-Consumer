@@ -1,4 +1,4 @@
-$("#id_site").change(function(event) {
+$("#pushToCol #id_site").change(function(event) {
     var siteId = $(this).children("option:selected").val();
     if (siteId) {
         // Create Ajax Call

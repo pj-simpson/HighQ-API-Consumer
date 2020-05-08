@@ -1,4 +1,4 @@
-{% extends 'task_base.html' %}
+{% extends 'base.html' %}
 
 {% load static %}
 
@@ -27,27 +27,32 @@
 
                         <article class="tile is-child box">
                             <figure class="is-pulled-left">
-                            {% load thumbnail %}
-                            {% thumbnail action.user.user_profile.photo "150x150" as im %}
-                                <a href="{% url "profiles:profile_detail" action.user_id %}">
-                                    <img src="{{im.url}}" alt="User Profile Photo">
-                                </a>
-                            {% endthumbnail %}
+                                {% load thumbnail %}
+                                {% thumbnail action.user.user_profile.photo "150x150" as im %}
+                                    <a href="{% url "profiles:profile_detail" action.user_id %}">
+                                        <img src="{{im.url}}" alt="User Profile Photo">
+                                    </a>
+                                {% endthumbnail %}
                         </figure>
-                          <p class="subtitle">
-                              <a href="{% url "profiles:profile_detail" action.user_id %}">
-                                    {{ action.user.first_name }} {{ action.user.last_name }}
-                              </a>
-                                    {{action.verb}}
-                              {% if not action.target_ct_id == 11 %}
-                                  <a href="{{action.get_task_url}}">
-                                    {{ action.target }}
-                                  </a>
-                              {% endif %}
 
-
-                          </p>
+                              <p class="subtitle" style="margin-left: 25%">
+                                      <a href="{% url "profiles:profile_detail" action.user_id %}">
+                                            {{ action.user.first_name }} {{ action.user.last_name }}
+                                      </a>
+                                        {{action.verb}}
+                                  {% if not action.target_ct_id == 11 and not action.target_ct_id == 4 %}
+                                      <a href="{{action.get_task_url}}">
+                                        {{ action.target }}.
+                                      </a>
+                                  {% endif %}
+                              </p>
+                            <div class="column is-pulled-right">
+                                <div class="tags">
+                                  <span class="tag is-info is-light">{{ action.created|timesince }} ago.</span>
+                                </div>
+                            </div>
                         </article>
+
                       </div>
                     </div>
                   </div>

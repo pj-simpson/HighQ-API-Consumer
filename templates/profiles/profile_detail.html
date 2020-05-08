@@ -8,7 +8,11 @@
     <section class="hero is-info welcome is-small">
         <div class="hero-body">
             <div class="container">
-                <h1 class="title">{% if object.user == request.user %}Your{% else %}{{object.user.first_name }} {{ object.user.last_name }}'s{% endif %} Profile</h1>
+                <h1 class="title">
+                    {% if object.user == request.user %}Your{% else %}
+                            {{object.user.first_name }} {{ object.user.last_name }}'s
+                    {% endif %} Profile
+                </h1>
                 {% if object.user == request.user %}<a href="{% url "profiles:edit_profile"%}"class="button is-primary is-outlined"><h2 class="subtitle">Edit</h2></a>{% endif %}
             </div>
         </div>
@@ -31,12 +35,12 @@
                             </div>
                         <section class="section">
                             <div class="card-image">
-                                <figure>
-                                  {% load thumbnail %}
-                                    {% thumbnail object.photo "150x150" as im %}
-                                        <img src="{{im.url}}" alt="Asignee Profile Photo">
-                                    {% endthumbnail %}
-                                </figure>
+                                    <figure>
+                                      {% load thumbnail %}
+                                        {% thumbnail object.photo "150x150" as im %}
+                                            <img src="{{im.url}}" alt="Asignee Profile Photo">
+                                        {% endthumbnail %}
+                                    </figure>
                               </div>
                         </section>
                         </header>
@@ -80,14 +84,6 @@
                                 </table>
                               </div>
                             </div>
-
-
-
-
-
-
-
-
                 </div>
             </div>
         </div>

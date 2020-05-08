@@ -12,7 +12,7 @@ class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='user_profile')
     phone_number = PhoneNumberField(blank=True, default='')
     contact_email = models.EmailField(blank=True)
-    photo = models.ImageField(upload_to='users/%Y/%m/%d/', blank=True)
+    photo = models.ImageField(upload_to='users/%Y/%m/%d/', default='no_image.png')
 
     def is_user_firstline(self):
         if self.user in User.objects.filter(groups=1):

@@ -5,6 +5,7 @@ from django.contrib.auth.models import Group
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.views import View
+from django.core import paginator
 from django.views.generic import DetailView
 from .forms import ProfileEditForm, UserRegistrationForm
 from .models import Profile
@@ -46,7 +47,7 @@ class EditProfileView(View,LoginRequiredMixin):
                                        files=request.FILES)
         if profile_form.is_valid():
             profile_form.save()
-            create_action(request.user, 'update their profile.', profile)
+            create_action(request.user, 'updated their profile.', profile)
             messages.success(request, 'Profile updated successfully')
         else:
             messages.error(request, 'Error updating your profile')
@@ -63,6 +64,18 @@ class DetailProfileView(View,LoginRequiredMixin):
     def get(self,request,*args,**kwargs):
         user_id = self.kwargs['pk']
         object = get_object_or_404(Profile, user_id=user_id)
+
+        # if object.is_user_firstline:
+        #     issues_posted = object.get_posted()
+        #     issues_posted_paginator = paginator.Paginator(issues_posted,6)
+        #     initial_page = issues_posted_paginator.page(1)
+        # else:
+        #     issues_posted = object.get_assigned()
+        #     issues_posted_paginator = paginator.Paginator(issues_posted, 6)
+        #     initial_page = issues_posted_paginator.page(1)
+        #
+        # return initial_page
+
         return render(request,'profiles/profile_detail.html',{'object':object})
 
 

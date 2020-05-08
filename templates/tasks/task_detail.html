@@ -28,12 +28,12 @@
                 <div class="card">
                   <div class="card-content">
                       <figure class="is-pulled-right">
-                            {% load thumbnail %}
-                            {% thumbnail object.get_poster_profile.photo "150x150" as im %}
+                          {% load thumbnail %}
+                              {% thumbnail object.get_poster_profile.photo "150x150" as im %}
                                 <a href="{% url "profiles:profile_detail" object.poster.id %}">
                                     <img src="{{im.url}}" alt="User Profile Photo">
                                 </a>
-                            {% endthumbnail %}
+                              {% endthumbnail %}
                         </figure>
                     <p class="title">
                       {{object.subject}}
