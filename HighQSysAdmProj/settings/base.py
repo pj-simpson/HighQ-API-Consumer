@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django_cron',
+    'rest_framework',
 
     'useradmin',
     'siteadmin',
@@ -50,6 +51,7 @@ INSTALLED_APPS = [
     'profiles',
     'tasks',
     'actions',
+    'api',
 
     'sorl.thumbnail',
     'phonenumber_field',
@@ -178,6 +180,17 @@ CKEDITOR_CONFIGS = {
         'width': 500,
 
     },
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS':
+        'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE':5,
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+            'rest_framework.authentication.BasicAuthentication',
+            'rest_framework.authentication.SessionAuthentication',
+        ]
+
 }
 
 

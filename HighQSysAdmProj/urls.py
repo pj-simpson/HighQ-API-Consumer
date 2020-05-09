@@ -38,6 +38,8 @@ urlpatterns = [
     path('accounts/register/', RedirectView.as_view(pattern_name='register', permanent=True)),
     path('accounts/', include('registration.backends.simple.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('api/', include('api.urls')),
+
 
 ]
 
