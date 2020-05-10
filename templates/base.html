@@ -55,6 +55,7 @@
                         {% endif %}
                             <a class="navbar-item is-hoverable {% if nav == 'tasks' %}is-active{% endif %} " href="{% url 'tasks:task_list' %}">Tasks</a>
                             <a class="navbar-item is-hoverable {% if nav == 'activity' %}is-active{% endif %} " href="{% url 'actions:activity' %}">Activity</a>
+                            <a class="navbar-item is-hoverable" href="{% url 'swagger_docs' %}">API</a>
                     {% endif %}
                 </div>
                 <div class="navbar-end">

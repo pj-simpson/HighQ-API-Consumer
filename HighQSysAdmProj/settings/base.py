@@ -56,6 +56,8 @@ INSTALLED_APPS = [
     'sorl.thumbnail',
     'phonenumber_field',
     'ckeditor',
+    'rest_framework_swagger',
+
 ]
 
 MIDDLEWARE = [
@@ -193,4 +195,7 @@ REST_FRAMEWORK = {
 
 }
 
+REST_FRAMEWORK = { 'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema' }
+
+SWAGGER_SETTINGS = {}
 

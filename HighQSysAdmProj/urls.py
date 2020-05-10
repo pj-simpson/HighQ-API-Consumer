@@ -21,8 +21,12 @@ from django.conf.urls.static import static
 
 from useradmin import views
 from profiles.views import UserRegisterView
-
 from django.views.generic import RedirectView
+from rest_framework.documentation import include_docs_urls
+from rest_framework_swagger.views import get_swagger_view
+
+schema_view = get_swagger_view(title='Swagger Documentation')
+
 
 
 urlpatterns = [
@@ -39,8 +43,8 @@ urlpatterns = [
     path('accounts/', include('registration.backends.simple.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('api/', include('api.urls')),
-
-
+    path('api/api-auth/',include('rest_framework.urls')),
+    path('docs/', schema_view,name='swagger_docs'),
 ]
 
 if settings.DEBUG:

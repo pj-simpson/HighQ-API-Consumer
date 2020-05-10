@@ -5,6 +5,7 @@ from rest_framework.generics import ListCreateAPIView, RetrieveAPIView,ListAPIVi
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
+from .custompermissions import FirstLineOrReadOnly
 
 from tasks.models import Task
 from .serializers import TaskSerializer, UserSerializer
@@ -27,7 +28,7 @@ class UserDetailEndpoint(RetrieveAPIView):
 
 class TaskListEndpoint(ListCreateAPIView):
     authentication_classes = [SessionAuthentication, BasicAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated,FirstLineOrReadOnly]
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
     name = 'task-list'
