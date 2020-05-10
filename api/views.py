@@ -1,17 +1,19 @@
 from rest_framework import generics,filters
-from django_filters import AllValuesFilter,DateTimeFilter,NumberFilter
-
+from django_filters.rest_framework import DjangoFilterBackend
 from django.shortcuts import render
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.generics import ListCreateAPIView, RetrieveAPIView,ListAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
+from rest_framework.filters import OrderingFilter,SearchFilter
 from .custompermissions import FirstLineOrReadOnly
 
 from tasks.models import Task
 from .serializers import TaskSerializer, UserSerializer
 from django.contrib.auth.models import User
+
+
 
 
 
@@ -21,6 +23,8 @@ class UserListEndpoint(ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     name = 'user-list'
+    ordering=['id']
+    filter_backends = [DjangoFilterBackend,OrderingFilter,SearchFilter]
     ordering_fields = ('id',)
     search_fields =('^username','^first_name','^last_name','^email')
 
@@ -30,7 +34,6 @@ class UserDetailEndpoint(RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     name = 'user-detail'
-    filter_backends = None
 
 
 class TaskListEndpoint(ListCreateAPIView):
@@ -40,6 +43,7 @@ class TaskListEndpoint(ListCreateAPIView):
     serializer_class = TaskSerializer
     name = 'task-list'
     ordering = ['created']
+    filter_backends = [DjangoFilterBackend,OrderingFilter,SearchFilter]
     ordering_fields = ('created',)
     search_fields = ('^body', '^subject',)
     filter_fields = ('poster','asignee','status','ispushed',)
@@ -50,11 +54,9 @@ class TaskDetailEndpoint(RetrieveAPIView):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
     name = 'task-detail'
-    filter_backends = None
 
 class ApiRoot(generics.GenericAPIView):
     name = 'api-root'
-    filter_backends = None
     def get(self, request, *args, **kwargs):
         return Response({
             'users': reverse('api:user-list',request=request),
