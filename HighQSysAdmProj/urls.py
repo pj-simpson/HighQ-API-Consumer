@@ -37,7 +37,7 @@ urlpatterns = [
     path('profile/', include('profiles.urls')),
     path('tasks/', include('tasks.urls')),
     path('activity/', include('actions.urls')),
-    path('admin/', admin.site.urls),
+    path('admin_notadmin_999/', admin.site.urls),
     path('register/',UserRegisterView.as_view(),name='register'),
     path('accounts/register/', RedirectView.as_view(pattern_name='register', permanent=True)),
     path('accounts/', include('registration.backends.simple.urls')),
@@ -50,4 +50,11 @@ urlpatterns = [
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)
+
+
+    import debug_toolbar
+
+    urlpatterns = [
+                      path('__debug__/', include(debug_toolbar.urls)),
+                  ] + urlpatterns
 

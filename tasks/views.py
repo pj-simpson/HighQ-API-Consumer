@@ -2,7 +2,7 @@ import requests
 import json
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
@@ -21,11 +21,12 @@ from .forms import TaskCollabPushForm
 from .get_task_statuses import get_task_status
 
 
-class TaskCreateView(SuccessMessageMixin,CreateView,PermissionRequiredMixin ):
+class TaskCreateView(LoginRequiredMixin,PermissionRequiredMixin,CreateView, SuccessMessageMixin):
     model = Task
     fields = ['subject','body']
     template_name_suffix ='_create_form'
     success_message = "Task Successfully created!"
+    permission_required = 'tasks.add_task'
 
 
     def form_valid(self,form):
@@ -43,7 +44,7 @@ class TaskCreateView(SuccessMessageMixin,CreateView,PermissionRequiredMixin ):
 
 
 
-class TaskListView(ListView, PermissionRequiredMixin):
+class TaskListView(LoginRequiredMixin,ListView):
     model = Task
     paginate_by = 5
 
@@ -57,7 +58,7 @@ class TaskListView(ListView, PermissionRequiredMixin):
         context['menu'] = 'list'
         return context
 
-class TaskUnassignedListView(TaskListView,PermissionRequiredMixin):
+class TaskUnassignedListView(TaskListView):
 
     def get_queryset(self):
         return self.model.objects.filter(asignee__isnull=True).exclude(status='complete')
@@ -70,7 +71,7 @@ class TaskUnassignedListView(TaskListView,PermissionRequiredMixin):
 
 
 
-class TaskUserListView(TaskListView,PermissionRequiredMixin):
+class TaskUserListView(TaskListView):
     def get_queryset(self):
         return self.model.objects.filter(asignee__id=self.kwargs['pk']).exclude(status='complete')
 
@@ -82,7 +83,7 @@ class TaskUserListView(TaskListView,PermissionRequiredMixin):
 
 
 
-class TaskCompleteListView(TaskListView,PermissionRequiredMixin):
+class TaskCompleteListView(TaskListView):
     def get_queryset(self):
         return self.model.objects.filter(status='complete')
 
@@ -95,7 +96,7 @@ class TaskCompleteListView(TaskListView,PermissionRequiredMixin):
 
 
 
-class TaskDetailView(DetailView,PermissionRequiredMixin):
+class TaskDetailView(LoginRequiredMixin,DetailView):
     model = Task
 
     def get_context_data(self, **kwargs):
@@ -105,11 +106,12 @@ class TaskDetailView(DetailView,PermissionRequiredMixin):
 
 
 
-class TaskEditView(UpdateView,PermissionRequiredMixin):
+class TaskEditView(LoginRequiredMixin,PermissionRequiredMixin,UpdateView):
     model = Task
     fields = ['status', 'asignee']
     success_url = '/tasks/'
     success_message = "Task Successfully updated!"
+    permission_required = 'tasks.change_task'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -124,15 +126,15 @@ class TaskEditView(UpdateView,PermissionRequiredMixin):
 
 
 
-class TaskPushToCollabView(View):
+class TaskPushToCollabView(PermissionRequiredMixin,LoginRequiredMixin,View):
 
-    @method_decorator(login_required)
+    permission_required = 'tasks.change_task'
+
     def get(self, request,pk,post):
         form = TaskCollabPushForm()
         task = get_object_or_404(Task, pk=pk)
         return render(request, 'tasks/task_push_form.html',{'form': form, 'nav':'tasks'})
 
-    @method_decorator(login_required)
     def post(self, request, pk, post):
 
         task = get_object_or_404(Task,pk=pk)

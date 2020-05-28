@@ -38,7 +38,7 @@ class UserRegisterView(View):
                       'registration/registration_form.html',
                       {'user_form': user_form})
 
-class EditProfileView(View,LoginRequiredMixin):
+class EditProfileView(LoginRequiredMixin,View):
 
     def post(self,request):
         profile = get_object_or_404(Profile,user_id=request.user.id)
@@ -59,7 +59,7 @@ class EditProfileView(View,LoginRequiredMixin):
         profile_form = ProfileEditForm(instance=profile)
         return render(request,'profiles/edit_profile.html',{'profile_form':profile_form})
 
-class DetailProfileView(View,LoginRequiredMixin):
+class DetailProfileView(LoginRequiredMixin,View):
 
     def get(self,request,*args,**kwargs):
         user_id = self.kwargs['pk']

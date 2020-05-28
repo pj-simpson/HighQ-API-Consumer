@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.utils.decorators import method_decorator
@@ -7,14 +8,14 @@ from django.views import View
 from orgadmin.forms import HighQOrgSearchForm, HighQOrgSubmitForm
 
 
-class HighQOrgSearchPage(View):
-    @method_decorator(login_required)
+class HighQOrgSearchPage(LoginRequiredMixin,View):
+
     def get(self, request):
         form = HighQOrgSearchForm()
         return render(request, 'orgadmin/orgsearch.html', {'form': form, 'nav':'col'})
 
-class HighQOrgSearch(View):
-    @method_decorator(login_required)
+class HighQOrgSearch(LoginRequiredMixin,View):
+
     def get(self, request):
         search_result = {}
         if 'orgname' in request.GET or 'domainname' in request.GET:
@@ -25,14 +26,14 @@ class HighQOrgSearch(View):
         return JsonResponse(search_result,safe=False)
 
 
-class HighQOrgSubmitPage(View):
-    @method_decorator(login_required)
+class HighQOrgSubmitPage(LoginRequiredMixin,View):
+
     def get(self, request):
         form = HighQOrgSubmitForm()
         return render(request, 'orgadmin/orgsubmit.html', {'form': form, 'nav':'col'})
 
-class HighQOrgSubmit(View):
-    @method_decorator(login_required)
+class HighQOrgSubmit(LoginRequiredMixin,View):
+
     def get(self, request):
         search_result = {}
         if 'orgname' in request.GET:

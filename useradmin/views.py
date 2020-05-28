@@ -1,5 +1,6 @@
 import requests
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.utils.decorators import method_decorator
@@ -10,7 +11,8 @@ from siteadmin.token_gen import token_generation
 from useradmin.forms import HighQUserForm
 
 # load the index/about page
-class IndexView(View):
+class IndexView(LoginRequiredMixin,View):
+
     def get(self,request):
         response = render(request, 'index.html')
         return response
@@ -18,15 +20,15 @@ class IndexView(View):
 
 # load the page where the search form will be
 
-class HighQUserSearchPage(View):
-    @method_decorator(login_required)
+class HighQUserSearchPage(LoginRequiredMixin,View):
+
     def get(self,request):
         form = HighQUserForm()
         return render(request, 'useradmin/user_search.html', {'form': form,'nav':'col'})
 
 # view for the ajax call which fetches the search results
-class HighQUserSearch(View):
-    @method_decorator(login_required)
+class HighQUserSearch(LoginRequiredMixin,View):
+
     def get(self,request):
         search_result = {}
         if 'email' in request.GET:
@@ -37,8 +39,8 @@ class HighQUserSearch(View):
         return JsonResponse(search_result)
 
 
-class HighQUserRemove(View):
-    @method_decorator(login_required)
+class HighQUserRemove(LoginRequiredMixin,View):
+
     def get(self,request):
         result = {}
         token = token_generation()
@@ -61,8 +63,8 @@ class HighQUserRemove(View):
 
 # Debug and sort this out first and then copy for suspend:
 
-class HighQUserSiteInvite(View):
-    @method_decorator(login_required)
+class HighQUserSiteInvite(LoginRequiredMixin,View):
+
     def get(self,request):
         result = {}
         token = token_generation()
