@@ -1,12 +1,8 @@
-from django.db import models
-from django.shortcuts import get_object_or_404
-from django.template.defaultfilters import slugify
-from django.utils import timezone
-from django.contrib.auth.models import User
-
-from profiles.models import Profile
-from django.urls import reverse
 from ckeditor_uploader.fields import RichTextUploadingField
+from django.contrib.auth.models import User
+from django.db import models
+from django.template.defaultfilters import slugify
+from django.urls import reverse
 
 
 class Task(models.Model):
@@ -52,9 +48,4 @@ class Task(models.Model):
     def get_possible_asignees(self):
         return User.objects.all().filter(groups__name='Second Line')
 
-    def get_poster_profile(self):
-        return get_object_or_404(Profile,user=self.poster_id)
-
-    def get_asignee_profile(self):
-        return get_object_or_404(Profile, user=self.asignee_id)
 

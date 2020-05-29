@@ -10,8 +10,8 @@
         <div class="hero-body">
             <div class="container">
                 <h2 class="subtitle"><a href="{% url "tasks:task_list" %}">Tasks...</a></h2>
-                <h2 class="subtitle"><a href="{{ task.get_absolute_url }}">{{ object.subject }} Details...</a></h2>
-                <h2 class="title">Edit "{{ object.subject }}"</h2>
+                <h2 class="subtitle"><a href="{{ task.get_absolute_url }}">{{ task.subject }} Details...</a></h2>
+                <h2 class="title">Edit "{{ task.subject }}"</h2>
             </div>
         </div>
     </section>
@@ -27,7 +27,7 @@
                                      <label for="id_status">Status:</label>
                                      <div class="select">
                                          <select name="status" id="id_status">
-                                             {% for value,label in object.Status.choices %}
+                                             {% for value,label in task.Status.choices %}
                                                  <option value="{{value}}">{{label}}</option>
                                              {% endfor %}
                                         </select>
@@ -39,7 +39,7 @@
                                      <label for="id_asignee">Asignee:</label>
                                      <div class="select">
                                          <select name="asignee" id="id_asignee">
-                                             {% for user in object.get_possible_asignees %}
+                                             {% for user in task.get_possible_asignees %}
                                                  <option value="{{user.id}}">{{ user.first_name }} {{ user.last_name }}</option>
                                              {% endfor %}
                                         </select>

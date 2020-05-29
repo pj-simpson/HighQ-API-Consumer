@@ -3,7 +3,7 @@
 {% load perm_group_tags %}
 
 {% block title_block %}
-    {{object.subject}}
+    {{task.subject}}
 {% endblock %}
 
 {% block body_block %}
@@ -11,8 +11,8 @@
         <div class="hero-body">
             <div class="container">
                 <h2 class="subtitle"><a href="{% url "tasks:task_list" %}">Tasks...</a></h2>
-                <h1 class="title">"{{ object.subject }}" Details</h1>
-                {% if request.user|has_group:"Second Line" and not object.ispushed %}<a href="{% url "tasks:task_push" object.pk object.slug %}"class="button is-primary is-outlined"><h2 class="subtitle">Push Task To Collaborate</h2></a>{% endif %}
+                <h1 class="title">"{{ task.subject }}" Details</h1>
+                {% if request.user|has_group:"Second Line" and not task.ispushed %}<a href="{% url "tasks:task_push" task.pk task.slug %}"class="button is-primary is-outlined"><h2 class="subtitle">Push Task To Collaborate</h2></a>{% endif %}
             </div>
         </div>
     </section>
@@ -29,40 +29,40 @@
                   <div class="card-content">
                       <figure class="is-pulled-right">
                           {% load thumbnail %}
-                              {% thumbnail object.get_poster_profile.photo "150x150" as im %}
-                                <a href="{% url "profiles:profile_detail" object.poster.id %}">
+                              {% thumbnail task.poster.user_profile.photo "150x150" as im %}
+                                <a href="{% url "profiles:profile_detail" task.poster.id %}">
                                     <img src="{{im.url}}" alt="User Profile Photo">
                                 </a>
                               {% endthumbnail %}
                         </figure>
                     <p class="title">
-                      {{object.subject}}
+                      {{task.subject}}
                     </p>
                     <p class="subtitle">
-                      Raised by <a href="{% url "profiles:profile_detail" object.poster.id %}">{{ object.poster.first_name }} {{ object.poster.last_name }}</a>
-                        on {{ object.created}}
+                      Raised by <a href="{% url "profiles:profile_detail" task.poster.id %}">{{ task.poster.first_name }} {{ task.poster.last_name }}</a>
+                        on {{ task.created}}
                     </p>
                       <p class="is-small is-flex">
-                          {{ object.body|safe }}
+                          {{ task.body|safe }}
                       </p>
                   </div>
                   <footer class="card-footer">
                     <p class="card-footer-item">
                       <span>
-                        Status: "{{object.get_status_display}}"
+                        Status: "{{task.get_status_display}}"
                       </span>
                     </p>
                     <p class="card-footer-item">
-                        {% if object.asignee %}
+                        {% if task.asignee %}
                           <span>
                               Assigned to:
-                                <a href="{% url "profiles:profile_detail" object.asignee.id %}">
-                                    {% if object.asignee == request.user %}Me{% else %}{{ object.asignee.first_name }} {{ object.asignee.last_name }}{% endif %}
+                                <a href="{% url "profiles:profile_detail" task.asignee.id %}">
+                                    {% if task.asignee == request.user %}Me{% else %}{{ task.asignee.first_name }} {{ task.asignee.last_name }}{% endif %}
                                 </a>
                           </span>
                                 {% load thumbnail %}
-                                {% thumbnail object.get_asignee_profile.photo "50x50" as im %}
-                                    <a href="{% url "profiles:profile_detail" object.asignee.id %}">
+                                {% thumbnail task.asignee.user_profile.photo "50x50" as im %}
+                                    <a href="{% url "profiles:profile_detail" task.asignee.id %}">
                                         <img src="{{im.url}}" alt="Asignee Profile Photo">
                                     </a>
                                 {% endthumbnail %}
@@ -75,7 +75,7 @@
                       <p class="card-footer-item">
                       <span>
                           {% if request.user|has_group:"Second Line" %}
-                                <a href="{% url "tasks:task_edit" object.pk object.slug %}">Edit</a>
+                                <a href="{% url "tasks:task_edit" task.pk task.slug %}">Edit</a>
                           {% else %}
                               No Permission To Edit
                           {% endif %}

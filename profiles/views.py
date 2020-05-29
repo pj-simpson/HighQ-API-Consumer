@@ -40,6 +40,7 @@ class UserRegisterView(View):
 
 class EditProfileView(LoginRequiredMixin,View):
 
+
     def post(self,request):
         profile = get_object_or_404(Profile,user_id=request.user.id)
         profile_form = ProfileEditForm(instance=profile,

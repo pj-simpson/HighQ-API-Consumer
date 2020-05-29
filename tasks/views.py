@@ -1,24 +1,21 @@
-import requests
 import json
+
+import requests
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from django.db.models import Q
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
-from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
-from django.db.models import Q
+
 from HighQSysAdmProj.settings import base
 from actions.utils import create_action
-
-
-
 from siteadmin.token_gen import token_generation
-from .models import Task
 from .forms import TaskCollabPushForm
 from .get_task_statuses import get_task_status
+from .models import Task
 
 
 class TaskCreateView(LoginRequiredMixin,PermissionRequiredMixin,CreateView, SuccessMessageMixin):
@@ -27,6 +24,7 @@ class TaskCreateView(LoginRequiredMixin,PermissionRequiredMixin,CreateView, Succ
     template_name_suffix ='_create_form'
     success_message = "Task Successfully created!"
     permission_required = 'tasks.add_task'
+    context_object_name = 'task'
 
 
     def form_valid(self,form):
@@ -98,6 +96,7 @@ class TaskCompleteListView(TaskListView):
 
 class TaskDetailView(LoginRequiredMixin,DetailView):
     model = Task
+    context_object_name = 'task'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -112,6 +111,7 @@ class TaskEditView(LoginRequiredMixin,PermissionRequiredMixin,UpdateView):
     success_url = '/tasks/'
     success_message = "Task Successfully updated!"
     permission_required = 'tasks.change_task'
+    context_object_name = 'task'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -127,7 +127,6 @@ class TaskEditView(LoginRequiredMixin,PermissionRequiredMixin,UpdateView):
 
 
 class TaskPushToCollabView(PermissionRequiredMixin,LoginRequiredMixin,View):
-
     permission_required = 'tasks.change_task'
 
     def get(self, request,pk,post):
@@ -176,9 +175,8 @@ class TaskPushToCollabView(PermissionRequiredMixin,LoginRequiredMixin,View):
                 messages.error(request, 'Task Successfully Pushed To Collaborate')
                 return redirect('tasks:task_list')
 
-class TasksGetSiteTaskList(View):
+class TasksGetSiteTaskList(LoginRequiredMixin,View):
 
-    @method_decorator(login_required)
     def get(self, request,pk,post):
         token = token_generation()
         result = {}
