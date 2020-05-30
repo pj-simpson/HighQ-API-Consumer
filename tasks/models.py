@@ -5,6 +5,7 @@ from django.template.defaultfilters import slugify
 from django.urls import reverse
 
 
+
 class Task(models.Model):
 
     class Status(models.TextChoices):

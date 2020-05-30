@@ -70,6 +70,3 @@ def refresh_token(latest_token):
         result['token'] = t.access_token
 
     return result
-
-
-

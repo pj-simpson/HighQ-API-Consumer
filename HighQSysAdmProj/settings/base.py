@@ -129,25 +129,24 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/London'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-# HIGHQ_API_TOKEN = config('HIGHQ_API_TOKEN',default='')
+
 HIGHQCLIENTKEY = config('HIGHQCLIENTKEY',default='')
 HIGHQCLIENTSECRET = config('HIGHQCLIENTSECRET',default='')
 HIGHQCODE = config('HIGHQCODE',default='')
 INSTANCE = config('INSTANCE',default='')
 
-USE_TZ = True
 
 REGISTRATION_OPEN = True
 REGISTRATION_AUTO_LOGIN = True
