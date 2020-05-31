@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'django_cron',
+    'django_crontab',
     'rest_framework',
 
 
@@ -135,7 +135,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = False
+USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
@@ -153,11 +153,8 @@ REGISTRATION_AUTO_LOGIN = True
 LOGIN_REDIRECT_URL = 'index'
 LOGIN_URL = 'auth_login'
 
-CRON_CLASSES = [
-    "siteadmin.cron.OauthCronJob"
-]
 
-PHONENUMBER_DB_FORMAT = 'NATIONAL'
+PHONENUMBER_DB_FORMAT = 'E164'
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'is-info',
@@ -208,3 +205,8 @@ INTERNAL_IPS = [
 ]
 
 
+CRONJOBS = [
+    ('0 * * * *', 'siteadmin.cron.oauth_cron_clearout'),
+]
+
+CRONTAB_DJANGO_SETTINGS_MODULE = 'HighQSysAdmProj.settings.local'
