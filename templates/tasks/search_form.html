@@ -1,0 +1,23 @@
+<div class="column is-3">
+    <section class="section"></section>
+    <section class="section">
+        <div class="tile box">
+            <form action="{% url 'tasks:task_search_results' %}">
+                <div class="field">
+                    <p class="control has-icons-left">
+                        <span class="icon is-left">
+                            <i class="fa fa-search-plus"></i>
+                        </span>
+                        <input class="input" placeholder="Tasks..." type="text" name="q" maxlength="200" required=""/>
+                    </p>
+                </div>
+                 <br />
+                <div class="field">
+                    <p class="control">
+                        <button class="button is-primary" type="submit" value="Submit">Search</button>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>

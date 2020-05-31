@@ -190,3 +190,13 @@ class TasksGetSiteTaskList(LoginRequiredMixin,View):
             return JsonResponse(result)
 
 
+class TaskSearchView(LoginRequiredMixin,ListView):
+    model = Task
+    context_object_name = 'task_list'
+    template_name = 'tasks/search_results.html'
+
+    def get_queryset(self):  # new
+        query = self.request.GET.get('q')
+        return Task.objects.filter(
+            Q(subject__icontains=query) | Q(body__icontains=query)
+        )

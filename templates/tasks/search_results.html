@@ -3,21 +3,21 @@
 {% load static %}
 
 {% block title_block %}
-    Latest Tasks
+    Search Results
 {% endblock %}
 
 {% block body_block %}
     <section class="hero is-info welcome is-small">
         <div class="hero-body">
             <div class="container">
-                <h1 class="title">Tasks...</h1>
+                <h1 class="title">Task Search Results...</h1>
             </div>
         </div>
     </section>
 
-    {% if messages %}
-        {% include 'tasks/messages.html' %}
-    {% endif %}
+{#    {% if messages %}#}
+{#        {% include 'tasks/messages.html' %}#}
+{#    {% endif %}#}
 
 
     <section class="section">
@@ -63,5 +63,3 @@
     {% include "tasks/search_form.html" %}
 
 {% endblock %}
-
-
