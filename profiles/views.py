@@ -11,59 +11,59 @@ from .forms import ProfileEditForm, UserRegistrationForm
 from .models import Profile
 from actions.utils import create_action
 
-class UserRegisterView(View):
 
-    def post(self,request):
+class UserRegisterView(View):
+    def post(self, request):
         user_form = UserRegistrationForm(request.POST)
-        second_line_auto = Group.objects.get(name='Second Line')
+        second_line_auto = Group.objects.get(name="Second Line")
         if user_form.is_valid():
             new_user = user_form.save(commit=False)
-            new_user.set_password(
-                user_form.cleaned_data['password2'])
+            new_user.set_password(user_form.cleaned_data["password2"])
             new_user.save()
             Profile.objects.create(user=new_user)
             second_line_auto.user_set.add(new_user)
-            new_user = authenticate(username=user_form.cleaned_data['username'],
-                                    password=user_form.cleaned_data['password1'],
-                                    )
+            new_user = authenticate(
+                username=user_form.cleaned_data["username"],
+                password=user_form.cleaned_data["password1"],
+            )
             login(request, new_user)
-            create_action(request.user, 'joined the system.', new_user)
-        return render(request,
-                          'registration/register_done.html',
-                          {'new_user': new_user})
+            create_action(request.user, "joined the system.", new_user)
+        return render(
+            request, "registration/register_done.html", {"new_user": new_user}
+        )
 
-    def get(self,request):
+    def get(self, request):
         user_form = UserRegistrationForm()
-        return render(request,
-                      'registration/registration_form.html',
-                      {'user_form': user_form})
-
-class EditProfileView(LoginRequiredMixin,View):
+        return render(
+            request, "registration/registration_form.html", {"user_form": user_form}
+        )
 
 
-    def post(self,request):
-        profile = get_object_or_404(Profile,user_id=request.user.id)
-        profile_form = ProfileEditForm(instance=profile,
-                                       data=request.POST,
-                                       files=request.FILES)
+class EditProfileView(LoginRequiredMixin, View):
+    def post(self, request):
+        profile = get_object_or_404(Profile, user_id=request.user.id)
+        profile_form = ProfileEditForm(
+            instance=profile, data=request.POST, files=request.FILES
+        )
         if profile_form.is_valid():
             profile_form.save()
-            create_action(request.user, 'updated their profile.', profile)
-            messages.success(request, 'Profile updated successfully')
+            create_action(request.user, "updated their profile.", profile)
+            messages.success(request, "Profile updated successfully")
         else:
-            messages.error(request, 'Error updating your profile')
-        return redirect('profiles:profile_detail',pk=request.user.id)
+            messages.error(request, "Error updating your profile")
+        return redirect("profiles:profile_detail", pk=request.user.id)
 
-
-    def get(self,request):
-        profile = get_object_or_404(Profile,user_id=request.user.id)
+    def get(self, request):
+        profile = get_object_or_404(Profile, user_id=request.user.id)
         profile_form = ProfileEditForm(instance=profile)
-        return render(request,'profiles/edit_profile.html',{'profile_form':profile_form})
+        return render(
+            request, "profiles/edit_profile.html", {"profile_form": profile_form}
+        )
 
-class DetailProfileView(LoginRequiredMixin,View):
 
-    def get(self,request,*args,**kwargs):
-        user_id = self.kwargs['pk']
+class DetailProfileView(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        user_id = self.kwargs["pk"]
         object = get_object_or_404(Profile, user_id=user_id)
 
         # if object.is_user_firstline:
@@ -77,7 +77,4 @@ class DetailProfileView(LoginRequiredMixin,View):
         #
         # return initial_page
 
-        return render(request,'profiles/profile_detail.html',{'object':object})
-
-
-
+        return render(request, "profiles/profile_detail.html", {"object": object})

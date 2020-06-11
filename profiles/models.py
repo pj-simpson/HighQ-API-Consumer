@@ -8,11 +8,14 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 import tasks as T
 
+
 class Profile(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='user_profile')
-    phone_number = PhoneNumberField(blank=True, default='')
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="user_profile"
+    )
+    phone_number = PhoneNumberField(blank=True, default="")
     contact_email = models.EmailField(blank=True)
-    photo = models.ImageField(upload_to='users/%Y/%m/%d/', default='no_image.png')
+    photo = models.ImageField(upload_to="users/%Y/%m/%d/", default="no_image.png")
 
     def is_user_firstline(self):
         if self.user in User.objects.filter(groups=1):
@@ -27,4 +30,3 @@ class Profile(models.Model):
 
     def get_assigned(self):
         return T.models.Task.objects.all().filter(asignee_id=self.user_id)
-

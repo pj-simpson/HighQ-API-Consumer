@@ -8,37 +8,35 @@ from django.views import View
 from orgadmin.forms import HighQOrgSearchForm, HighQOrgSubmitForm
 
 
-class HighQOrgSearchPage(LoginRequiredMixin,View):
-
+class HighQOrgSearchPage(LoginRequiredMixin, View):
     def get(self, request):
         form = HighQOrgSearchForm()
-        return render(request, 'orgadmin/orgsearch.html', {'form': form, 'nav':'col'})
+        return render(request, "orgadmin/orgsearch.html", {"form": form, "nav": "col"})
 
-class HighQOrgSearch(LoginRequiredMixin,View):
 
+class HighQOrgSearch(LoginRequiredMixin, View):
     def get(self, request):
         search_result = {}
-        if 'orgname' in request.GET or 'domainname' in request.GET:
+        if "orgname" in request.GET or "domainname" in request.GET:
             form = HighQOrgSearchForm(request.GET)
             if form.is_valid():
                 search_result = form.search()
 
-        return JsonResponse(search_result,safe=False)
+        return JsonResponse(search_result, safe=False)
 
 
-class HighQOrgSubmitPage(LoginRequiredMixin,View):
-
+class HighQOrgSubmitPage(LoginRequiredMixin, View):
     def get(self, request):
         form = HighQOrgSubmitForm()
-        return render(request, 'orgadmin/orgsubmit.html', {'form': form, 'nav':'col'})
+        return render(request, "orgadmin/orgsubmit.html", {"form": form, "nav": "col"})
 
-class HighQOrgSubmit(LoginRequiredMixin,View):
 
+class HighQOrgSubmit(LoginRequiredMixin, View):
     def get(self, request):
         search_result = {}
-        if 'orgname' in request.GET:
+        if "orgname" in request.GET:
             form = HighQOrgSubmitForm(request.GET)
             if form.is_valid():
                 search_result = form.submit()
 
-        return JsonResponse(search_result,safe=False)
+        return JsonResponse(search_result, safe=False)

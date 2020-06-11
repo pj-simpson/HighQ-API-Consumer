@@ -32,3 +32,7 @@ sorl-thumbnail==12.6.3
 sqlparse==0.3.0
 uritemplate==3.0.1
 urllib3==1.25.7
+flake8===3.7.9
+black==19.10b0
+isort==4.3.21
+

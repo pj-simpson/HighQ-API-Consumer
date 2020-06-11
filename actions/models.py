@@ -7,15 +7,23 @@ from tasks.models import Task
 
 
 class Action(models.Model):
-    user = models.ForeignKey('auth.User', related_name='actions',on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        "auth.User", related_name="actions", on_delete=models.CASCADE
+    )
     verb = models.CharField(max_length=255)
-    created= models.DateTimeField(auto_now_add=True)
-    target_ct = models.ForeignKey(ContentType,blank=True,null=True,related_name='target_obj',on_delete=models.CASCADE)
-    target_id= models.PositiveIntegerField(null=True,blank=True)
-    target = GenericForeignKey('target_ct', 'target_id')
+    created = models.DateTimeField(auto_now_add=True)
+    target_ct = models.ForeignKey(
+        ContentType,
+        blank=True,
+        null=True,
+        related_name="target_obj",
+        on_delete=models.CASCADE,
+    )
+    target_id = models.PositiveIntegerField(null=True, blank=True)
+    target = GenericForeignKey("target_ct", "target_id")
 
     class Meta:
-        ordering = ('-created',)
+        ordering = ("-created",)
 
     def get_task_url(self):
         task = get_object_or_404(Task, pk=self.target_id)

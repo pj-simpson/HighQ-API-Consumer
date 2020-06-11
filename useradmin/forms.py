@@ -11,18 +11,21 @@ class HighQUserForm(forms.Form):
     def search(self):
         result = {}
         token = token_generation()
-        email = self.cleaned_data['email']
-        endpoint = '{instance}api/6/users/{user_email}?type=email'
-        url = endpoint.format(instance=settings.INSTANCE,user_email=email)
-        headers = {'Authorization':'Bearer %s' % token['token_result']['token'],'Accept':'application/json'}
-        response = requests.get(url,headers=headers)
+        email = self.cleaned_data["email"]
+        endpoint = "{instance}api/6/users/{user_email}?type=email"
+        url = endpoint.format(instance=settings.INSTANCE, user_email=email)
+        headers = {
+            "Authorization": "Bearer %s" % token["token_result"]["token"],
+            "Accept": "application/json",
+        }
+        response = requests.get(url, headers=headers)
 
         if response.status_code == 200:
             result = response.json()
-            result['success'] = True
+            result["success"] = True
 
         if response.status_code == 403:
             result = response.json()
-            result['success'] = False
+            result["success"] = False
 
         return result

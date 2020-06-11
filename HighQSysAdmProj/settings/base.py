@@ -16,12 +16,14 @@ from django.contrib.messages import constants as messages
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(os.path.join(__file__,os.pardir))))
-TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
-STATIC_DIR = os.path.join(BASE_DIR,'static')
-MEDIA_DIR = os.path.join(BASE_DIR, 'media')
+BASE_DIR = os.path.dirname(
+    os.path.dirname(os.path.abspath(os.path.join(__file__, os.pardir)))
+)
+TEMPLATE_DIR = os.path.join(BASE_DIR, "templates")
+STATIC_DIR = os.path.join(BASE_DIR, "static")
+MEDIA_DIR = os.path.join(BASE_DIR, "media")
 
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = config("SECRET_KEY")
 
 
 # Quick-start development settings - unsuitable for production
@@ -34,75 +36,73 @@ SECRET_KEY = config('SECRET_KEY')
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-
-    'django_crontab',
-    'rest_framework',
-
-
-    'useradmin',
-    'siteadmin',
-    'orgadmin',
-    'registration',
-    'profiles',
-    'tasks',
-    'actions',
-    'api',
-
-    'sorl.thumbnail',
-    'phonenumber_field',
-    'ckeditor',
-    'rest_framework_swagger',
-    'django_filters',
-    'debug_toolbar',
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "django_crontab",
+    "rest_framework",
+    "useradmin",
+    "siteadmin",
+    "orgadmin",
+    "registration",
+    "profiles",
+    "tasks",
+    "actions",
+    "api",
+    "sorl.thumbnail",
+    "phonenumber_field",
+    "ckeditor",
+    "rest_framework_swagger",
+    "django_filters",
+    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
-ROOT_URLCONF = 'HighQSysAdmProj.urls'
+ROOT_URLCONF = "HighQSysAdmProj.urls"
 
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
 
-STATICFILES_DIRS =[STATIC_DIR,]
+STATICFILES_DIRS = [
+    STATIC_DIR,
+]
 
-STATIC_ROOT = '/home/PeterJosephSimpson/HighQ-API-Consumer/static'
+STATIC_ROOT = "/home/PeterJosephSimpson/HighQ-API-Consumer/static"
 
 
-MEDIA_URL = '/media/'
+MEDIA_URL = "/media/"
 MEDIA_ROOT = MEDIA_DIR
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATE_DIR,],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-                'django.template.context_processors.media',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [TEMPLATE_DIR,],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+                "django.template.context_processors.media",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'HighQSysAdmProj.wsgi.application'
+WSGI_APPLICATION = "HighQSysAdmProj.wsgi.application"
 
 
 # Password validation
@@ -110,26 +110,20 @@ WSGI_APPLICATION = 'HighQSysAdmProj.wsgi.application'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
 ]
 
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'Europe/London'
+TIME_ZONE = "Europe/London"
 
 USE_I18N = True
 
@@ -142,71 +136,85 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 
-HIGHQCLIENTKEY = config('HIGHQCLIENTKEY',default='')
-HIGHQCLIENTSECRET = config('HIGHQCLIENTSECRET',default='')
-HIGHQCODE = config('HIGHQCODE',default='')
-INSTANCE = config('INSTANCE',default='')
+HIGHQCLIENTKEY = config("HIGHQCLIENTKEY", default="")
+HIGHQCLIENTSECRET = config("HIGHQCLIENTSECRET", default="")
+HIGHQCODE = config("HIGHQCODE", default="")
+INSTANCE = config("INSTANCE", default="")
 
 
 REGISTRATION_OPEN = True
 REGISTRATION_AUTO_LOGIN = True
-LOGIN_REDIRECT_URL = 'index'
-LOGIN_URL = 'auth_login'
+LOGIN_REDIRECT_URL = "index"
+LOGIN_URL = "auth_login"
 
 
-PHONENUMBER_DB_FORMAT = 'E164'
+PHONENUMBER_DB_FORMAT = "E164"
 
 MESSAGE_TAGS = {
-    messages.DEBUG: 'is-info',
-    messages.INFO: 'is-info',
-    messages.SUCCESS: 'is-success',
-    messages.WARNING: 'is-warning',
-    messages.ERROR: 'is-danger',
-
+    messages.DEBUG: "is-info",
+    messages.INFO: "is-info",
+    messages.SUCCESS: "is-success",
+    messages.WARNING: "is-warning",
+    messages.ERROR: "is-danger",
 }
 
-CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
+CKEDITOR_JQUERY_URL = "https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"
 
-CKEDITOR_UPLOAD_PATH = 'uploads/'
+CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_IMAGE_BACKEND = "pillow"
 
 CKEDITOR_CONFIGS = {
-    'default': {
-        'toolbar': [["Format", "Bold", "Italic", "Underline", "Strike", "SpellChecker"],
-                ['NumberedList', 'BulletedList', "Indent", "Outdent", 'JustifyLeft', 'JustifyCenter',
-                 'JustifyRight', 'JustifyBlock'],
-                [ "Table", "Link", "Unlink", "Anchor", "SectionLink", "Subscript", "Superscript"], ['Undo', 'Redo'], ["Source"],
-                ["Maximize"]],
-        'height': 300,
-        'width': 500,
-
+    "default": {
+        "toolbar": [
+            ["Format", "Bold", "Italic", "Underline", "Strike", "SpellChecker"],
+            [
+                "NumberedList",
+                "BulletedList",
+                "Indent",
+                "Outdent",
+                "JustifyLeft",
+                "JustifyCenter",
+                "JustifyRight",
+                "JustifyBlock",
+            ],
+            [
+                "Table",
+                "Link",
+                "Unlink",
+                "Anchor",
+                "SectionLink",
+                "Subscript",
+                "Superscript",
+            ],
+            ["Undo", "Redo"],
+            ["Source"],
+            ["Maximize"],
+        ],
+        "height": 300,
+        "width": 675,
     },
 }
 
 REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS':
-        'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE':5,
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-            'rest_framework.authentication.BasicAuthentication',
-            'rest_framework.authentication.SessionAuthentication',
-        ]
-
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+    "PAGE_SIZE": 5,
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+    ],
 }
 
 REST_FRAMEWORK = {
-    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
-
-
+    "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
 }
 
 INTERNAL_IPS = [
-    '127.0.0.1',
+    "127.0.0.1",
 ]
 
 
 CRONJOBS = [
-    ('0 * * * *', 'siteadmin.cron.oauth_cron_clearout'),
+    ("0 * * * *", "siteadmin.cron.oauth_cron_clearout"),
 ]
 
-CRONTAB_DJANGO_SETTINGS_MODULE = 'HighQSysAdmProj.settings.local'
+CRONTAB_DJANGO_SETTINGS_MODULE = "HighQSysAdmProj.settings.local"

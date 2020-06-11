@@ -25,36 +25,33 @@ from django.views.generic import RedirectView
 from rest_framework.documentation import include_docs_urls
 from rest_framework_swagger.views import get_swagger_view
 
-schema_view = get_swagger_view(title='Swagger Documentation')
-
+schema_view = get_swagger_view(title="Swagger Documentation")
 
 
 urlpatterns = [
-    path('', views.IndexView.as_view(), name='index'),
-    path('users/', include('useradmin.urls')),
-    path('sites/', include('siteadmin.urls')),
-    path('orgs/', include('orgadmin.urls')),
-    path('profile/', include('profiles.urls')),
-    path('tasks/', include('tasks.urls')),
-    path('activity/', include('actions.urls')),
-    path('admin_notadmin_999/', admin.site.urls),
-    path('register/',UserRegisterView.as_view(),name='register'),
-    path('accounts/register/', RedirectView.as_view(pattern_name='register', permanent=True)),
-    path('accounts/', include('registration.backends.simple.urls')),
-    path('ckeditor/', include('ckeditor_uploader.urls')),
-    path('api/', include('api.urls')),
-    path('api/api-auth/',include('rest_framework.urls')),
-    path('docs/', schema_view,name='swagger_docs'),
+    path("", views.IndexView.as_view(), name="index"),
+    path("users/", include("useradmin.urls")),
+    path("sites/", include("siteadmin.urls")),
+    path("orgs/", include("orgadmin.urls")),
+    path("profile/", include("profiles.urls")),
+    path("tasks/", include("tasks.urls")),
+    path("activity/", include("actions.urls")),
+    path("admin_notadmin_999/", admin.site.urls),
+    path("register/", UserRegisterView.as_view(), name="register"),
+    path(
+        "accounts/register/",
+        RedirectView.as_view(pattern_name="register", permanent=True),
+    ),
+    path("accounts/", include("registration.backends.simple.urls")),
+    path("ckeditor/", include("ckeditor_uploader.urls")),
+    path("api/", include("api.urls")),
+    path("api/api-auth/", include("rest_framework.urls")),
+    path("docs/", schema_view, name="swagger_docs"),
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL,
-                          document_root=settings.MEDIA_ROOT)
-
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
     import debug_toolbar
 
-    urlpatterns = [
-                      path('__debug__/', include(debug_toolbar.urls)),
-                  ] + urlpatterns
-
+    urlpatterns = [path("__debug__/", include(debug_toolbar.urls)),] + urlpatterns
