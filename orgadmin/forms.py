@@ -4,8 +4,8 @@ import requests
 from django import forms
 
 from HighQSysAdmProj.settings import base
-from siteadmin.token_gen import token_generation
 from siteadmin.forms import is_empty
+from siteadmin.token_gen import token_generation
 
 
 class HighQOrgSearchForm(forms.Form):

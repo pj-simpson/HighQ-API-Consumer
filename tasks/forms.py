@@ -1,7 +1,8 @@
 import requests
 from django import forms
-from siteadmin.token_gen import token_generation
+
 from HighQSysAdmProj.settings import base
+from siteadmin.token_gen import token_generation
 
 
 def get_sites_with_tasks():

@@ -1,6 +1,6 @@
+import requests
 from django import forms
 from django.conf import settings
-import requests
 
 from siteadmin.token_gen import token_generation
 

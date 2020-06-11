@@ -1,7 +1,8 @@
+import requests
 from django import forms
 from django.conf import settings
-import requests
 from django.http import JsonResponse
+
 from .token_gen import token_generation
 
 

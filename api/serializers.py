@@ -1,6 +1,7 @@
-from rest_framework import serializers
-from tasks.views import Task
 from django.contrib.auth.models import User
+from rest_framework import serializers
+
+from tasks.views import Task
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):

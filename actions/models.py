@@ -1,8 +1,8 @@
-from django.db import models
-
-from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+from django.db import models
 from django.shortcuts import get_object_or_404
+
 from tasks.models import Task
 
 

@@ -13,17 +13,16 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path, include
-
 from django.conf import settings
 from django.conf.urls.static import static
-
-from useradmin import views
-from profiles.views import UserRegisterView
+from django.contrib import admin
+from django.urls import include, path
 from django.views.generic import RedirectView
 from rest_framework.documentation import include_docs_urls
 from rest_framework_swagger.views import get_swagger_view
+
+from profiles.views import UserRegisterView
+from useradmin import views
 
 schema_view = get_swagger_view(title="Swagger Documentation")
 

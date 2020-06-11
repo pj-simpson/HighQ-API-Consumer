@@ -1,8 +1,10 @@
-import requests
 from datetime import timedelta
+
+import requests
 from django.utils import timezone
 
 from HighQSysAdmProj.settings import base
+
 from .models import OauthToken
 
 

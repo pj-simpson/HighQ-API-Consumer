@@ -1,17 +1,20 @@
-from rest_framework import generics, filters
-from django_filters.rest_framework import DjangoFilterBackend
+from django.contrib.auth.models import User
 from django.shortcuts import render
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication
-from rest_framework.generics import ListCreateAPIView, RetrieveAPIView, ListAPIView
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters, generics
+from rest_framework.authentication import (BasicAuthentication,
+                                           SessionAuthentication)
+from rest_framework.filters import OrderingFilter, SearchFilter
+from rest_framework.generics import (ListAPIView, ListCreateAPIView,
+                                     RetrieveAPIView)
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
-from rest_framework.filters import OrderingFilter, SearchFilter
-from .custompermissions import FirstLineOrReadOnly
 
 from tasks.models import Task
+
+from .custompermissions import FirstLineOrReadOnly
 from .serializers import TaskSerializer, UserSerializer
-from django.contrib.auth.models import User
 
 
 class UserListEndpoint(ListAPIView):

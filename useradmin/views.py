@@ -10,6 +10,7 @@ from HighQSysAdmProj.settings import base
 from siteadmin.token_gen import token_generation
 from useradmin.forms import HighQUserForm
 
+
 # load the index/about page
 class IndexView(LoginRequiredMixin, View):
     def get(self, request):
