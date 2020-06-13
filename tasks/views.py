@@ -12,7 +12,7 @@ from django.views import View
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 
 from actions.utils import create_action
-from HighQSysAdmProj.settings import base
+from highqsysadmin.settings import base
 from siteadmin.token_gen import token_generation
 
 from .forms import TaskCollabPushForm

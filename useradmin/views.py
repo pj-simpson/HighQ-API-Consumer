@@ -6,7 +6,7 @@ from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.views import View
 
-from HighQSysAdmProj.settings import base
+from highqsysadmin.settings import base
 from siteadmin.token_gen import token_generation
 from useradmin.forms import HighQUserForm
 

@@ -1,7 +1,7 @@
 import requests
 from django import forms
 
-from HighQSysAdmProj.settings import base
+from highqsysadmin.settings import base
 from siteadmin.token_gen import token_generation
 
 

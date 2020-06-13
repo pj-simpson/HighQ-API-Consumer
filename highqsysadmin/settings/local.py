@@ -12,5 +12,5 @@ DATABASES = {
 THUMBNAIL_DEBUG = True
 
 # local env variable for shell
-# export DJANGO_SETTINGS_MODULE=HighQSysAdmProj.settings.local
-# python manage.py runserver --settings=HighQSysAdmProj.settings.local
+# export DJANGO_SETTINGS_MODULE=highqsysadmin.settings.local
+# python manage.py runserver --settings=highqsysadmin.settings.local
