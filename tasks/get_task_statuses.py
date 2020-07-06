@@ -1,10 +1,7 @@
-import json
-
 import requests
-from django.http import JsonResponse
 
 from highqsysadmin.settings import base
-from siteadmin.token_gen import token_generation
+from core.token_gen import token_generation
 
 
 def get_task_status(site_id):

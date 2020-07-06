@@ -1,13 +1,9 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import Group
-from django.core import paginator
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
-from django.views.generic import DetailView
-
 from actions.utils import create_action
 
 from .forms import ProfileEditForm, UserRegistrationForm
@@ -67,16 +63,5 @@ class DetailProfileView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         user_id = self.kwargs["pk"]
         object = get_object_or_404(Profile, user_id=user_id)
-
-        # if object.is_user_firstline:
-        #     issues_posted = object.get_posted()
-        #     issues_posted_paginator = paginator.Paginator(issues_posted,6)
-        #     initial_page = issues_posted_paginator.page(1)
-        # else:
-        #     issues_posted = object.get_assigned()
-        #     issues_posted_paginator = paginator.Paginator(issues_posted, 6)
-        #     initial_page = issues_posted_paginator.page(1)
-        #
-        # return initial_page
 
         return render(request, "profiles/profile_detail.html", {"object": object})

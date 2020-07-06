@@ -2,7 +2,7 @@ import requests
 from django import forms
 
 from highqsysadmin.settings import base
-from siteadmin.token_gen import token_generation
+from core.token_gen import token_generation
 
 
 def get_sites_with_tasks():

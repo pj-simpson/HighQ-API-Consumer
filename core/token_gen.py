@@ -5,7 +5,7 @@ from django.utils import timezone
 
 from highqsysadmin.settings import base
 
-from .models import OauthToken
+from siteadmin.models import OauthToken
 
 
 # helper function -- is a datetime within 30 mins of now?
@@ -24,7 +24,8 @@ def token_generation():
         result["token_result"] = initial_token()
 
     # If there is at least one record in the DB, we grab the latest and check if it expires soon. If not we use it
-    # If it does expire soon (or is in the past) , we call the refresh_token function. The refresh token always expries one year in the future
+    # If it does expire soon (or is in the past) , we call the refresh_token function. The refresh token always expries
+    # one year in the future
     if check > 0:
         latest_token = OauthToken.objects.latest("gen_time")
         if not is_close(latest_token.access_token_expires):
@@ -68,10 +69,13 @@ def refresh_token(latest_token):
     result = {}
     url = "{instance}api/oauth2/token".format(instance=base.INSTANCE)
     headers = {"Content-Type": "application/x-www-form-urlencoded"}
-    data = "client_id={client_id}&client_secret={client_secret}&grant_type=refresh_token&refresh_token={refresh_token}".format(
-        client_id=base.HIGHQCLIENTKEY,
-        client_secret=base.HIGHQCLIENTSECRET,
-        refresh_token=latest_token.refresh_token,
+    data = (
+        "client_id={client_id}&client_secret={client_secret}&grant_type=refresh_token&"
+        "refresh_token={refresh_token}".format(
+            client_id=base.HIGHQCLIENTKEY,
+            client_secret=base.HIGHQCLIENTSECRET,
+            refresh_token=latest_token.refresh_token,
+        )
     )
     response = requests.post(url, headers=headers, data=data)
 

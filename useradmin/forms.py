@@ -2,7 +2,7 @@ import requests
 from django import forms
 from django.conf import settings
 
-from siteadmin.token_gen import token_generation
+from core.token_gen import token_generation
 
 
 class HighQUserForm(forms.Form):

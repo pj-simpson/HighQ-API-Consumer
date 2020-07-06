@@ -18,11 +18,10 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 from django.views.generic import RedirectView
-from rest_framework.documentation import include_docs_urls
 from rest_framework_swagger.views import get_swagger_view
 
 from profiles.views import UserRegisterView
-from useradmin import views
+from core import views
 
 schema_view = get_swagger_view(title="Swagger Documentation")
 
@@ -53,4 +52,4 @@ if settings.DEBUG:
 
     import debug_toolbar
 
-    urlpatterns = [path("__debug__/", include(debug_toolbar.urls)),] + urlpatterns
+    urlpatterns = [path("__debug__/", include(debug_toolbar.urls))] + urlpatterns

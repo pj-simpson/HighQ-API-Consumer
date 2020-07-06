@@ -2,8 +2,7 @@ import json
 
 import requests
 from django.contrib import messages
-from django.contrib.auth.mixins import (LoginRequiredMixin,
-                                        PermissionRequiredMixin)
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
 from django.http import HttpResponseRedirect, JsonResponse
@@ -13,7 +12,7 @@ from django.views.generic import CreateView, DetailView, ListView, UpdateView
 
 from actions.utils import create_action
 from highqsysadmin.settings import base
-from siteadmin.token_gen import token_generation
+from core.token_gen import token_generation
 
 from .forms import TaskCollabPushForm
 from .get_task_statuses import get_task_status
@@ -131,7 +130,6 @@ class TaskPushToCollabView(PermissionRequiredMixin, LoginRequiredMixin, View):
 
     def get(self, request, pk, post):
         form = TaskCollabPushForm()
-        task = get_object_or_404(Task, pk=pk)
         return render(
             request, "tasks/task_push_form.html", {"form": form, "nav": "tasks"}
         )
@@ -147,8 +145,6 @@ class TaskPushToCollabView(PermissionRequiredMixin, LoginRequiredMixin, View):
             return context
 
         if form:
-
-            result = {}
             task_list_id = form.data["task_list"]
             site_id = form.data["site"]
             endpoint = "{instance}api/3/tasks?tasklistid={tasklistid}"
@@ -174,7 +170,6 @@ class TaskPushToCollabView(PermissionRequiredMixin, LoginRequiredMixin, View):
             response = requests.post(url, headers=headers, data=payload)
 
             if response.status_code == 200 or response.status_code == 201:
-                result = response.json()
                 task.ispushed = True
                 task.save()
                 create_action(request.user, "just pushed a task to collaborate:", task)

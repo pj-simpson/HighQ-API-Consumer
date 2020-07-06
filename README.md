@@ -10,22 +10,24 @@ the system's modules and functionality.
 
 ## Who is this for?
 
-In support, we get a lot of queries regarding the API endpoints from people in equivalent roles to us. Whilst not nessecarily developers, per se,
+In support, we get a lot of queries regarding the API endpoints from people in equivalent roles to us. Whilst not necessarily developers, per se,
 there are often support, infrastructure, service desk workers, etc ,etc who have a modicum of technical curiosity and want to understand 
 what is possible with the APIs we provide. 
 
 ## Imagined use case
 
-This App is for 1st line support/ admin/ service desk employees. It is not desirable  to expose the full system admin functionality of
-Collaborate to these staff, but you want them be able to carry out low-level administrative tasks like re-sending site invites, checking on the 
-status and size of sites, reporting on when users were added to the system, etc, etc.
+This app is a basic 'helpdesk' system for a support team divided into 1st and 2nd line workers. It is not desirable to expose the full system admin functionality of
+Collaborate to the 1st line staff, but you want them be able to carry out low-level administrative tasks like re-sending site invites, checking on the 
+status and size of sites, reporting on when users were added to the system, etc, etc. For tasks which cannot be carried out by them, they can create a helpdesk "ticket"
+for the 2nd line team to pick up. The second line team can even 'push' the tickets into their collaborate instance's Tasks modules, meaning each team has a different means
+of interacting with their instance, via the API. 
 
 ## What next?
 
-If you are familiar with the basics of web development, you might just be curious to peek here at how we've dealt with common wed development
-tasks,such as AJAX requsts to API endpoints, OAuth Token Generation and others.. 
+If you are familiar with the basics of web development, you might just be curious to peek here at how we've dealt with common web-development
+tasks,such as AJAX requests to API endpoints, OAuth Token Generation and others.. 
 
-If you are completely unfaimilar with Django and/or Python I'd reccomend working through a few of the tutorials [HERE](https://www.fullstackpython.com/django.html)
+If you are completely unfamiliar with Django and/or Python I'd recommend working through a few of the tutorials [HERE](https://www.fullstackpython.com/django.html)
 and then you can give the following a go: 
 
 1. [Install Python 3.6](https://www.python.org/downloads/) on your local machine.
@@ -37,7 +39,10 @@ and then you can give the following a go:
   - HIGHQCLIENTSECRET={{secret_key}}
   - HIGHQCODE={{OAuth_Code}}
   - INSTANCE={{Instance_URL}}
-6. Run the application using  "python3 manage.py runserver" and visit: http://localhost:8000/
+6. Create a super-user and log into the admin site
+    - Add one group called 'First Line' with the permission: 'tasks | task | can add task , tasks | task | can view task'
+    - Add another group called 'Second Line' with the permissions: 'tasks | task | can view task , tasks | task | can change task'
+7. Run the application using  "python3 manage.py runserver" and visit: http://localhost:8000/
 
 ## Support 
 

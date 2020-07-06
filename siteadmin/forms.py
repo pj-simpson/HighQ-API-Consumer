@@ -1,9 +1,8 @@
 import requests
 from django import forms
 from django.conf import settings
-from django.http import JsonResponse
 
-from .token_gen import token_generation
+from core.token_gen import token_generation
 
 
 def is_empty(any_structure):
@@ -78,8 +77,11 @@ class HighQSiteOwnerMessage(forms.Form):
             "Content-Type": "application/xml",
             "Accept": "application/json",
         }
-        payload = """<?xml version="1.0" encoding="UTF-8" standalone="no" ?><emailusers><emailsubject>Message From HighQ Sys Admin App</emailsubject><messagebody><![CDATA[{email_message}]]></messagebody><transactionids><transactionid>{user_id}</transactionid></transactionids></emailusers>""".format(
-            user_id=user_id, email_message=email_message
+        payload = (
+            """<?xml version="1.0" encoding="UTF-8" standalone="no" ?><emailusers><emailsubject>"""
+            """"Message From HighQ Sys Admin App</emailsubject><messagebody><![CDATA[{email_message}]]>"""
+            """</messagebody><transactionids><transactionid>{user_id}</transactionid></transactionids>"""
+            """</emailusers>""".format(user_id=user_id, email_message=email_message)
         )
         response = requests.put(url, headers=headers, data=payload)
 

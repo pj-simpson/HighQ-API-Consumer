@@ -1,22 +1,12 @@
 import requests
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.shortcuts import render
-from django.utils.decorators import method_decorator
 from django.views import View
 
 from highqsysadmin.settings import base
-from siteadmin.token_gen import token_generation
+from core.token_gen import token_generation
 from useradmin.forms import HighQUserForm
-
-
-# load the index/about page
-class IndexView(LoginRequiredMixin, View):
-    def get(self, request):
-        response = render(request, "index.html")
-        return response
-
 
 # load the page where the search form will be
 
@@ -55,8 +45,9 @@ class HighQUserRemove(LoginRequiredMixin, View):
             "Content-Type": "application/xml",
             "Accept": "application/json",
         }
-        payload = """<?xml version="1.0" encoding="UTF-8" standalone="no" ?><transactionids><transactionid>{user_id}</transactionid></transactionids>""".format(
-            user_id=user_id
+        payload = (
+            """<?xml version="1.0" encoding="UTF-8" standalone="no" ?><transactionids><transactionid>"""
+            """{user_id}</transactionid></transactionids>""".format(user_id=user_id)
         )
         response = requests.delete(url, headers=headers, data=payload)
 
@@ -85,8 +76,12 @@ class HighQUserSiteInvite(LoginRequiredMixin, View):
             "Content-Type": "application/xml",
             "Accept": "application/json",
         }
-        payload = """<?xml version="1.0" encoding="UTF-8" standalone="no" ?><invitations><messagebody><![CDATA[Site Invite Via HighQ Sys Admin App]]></messagebody><transactionids><transactionid>{user_id}</transactionid></transactionids></invitations>""".format(
-            user_id=user_id
+        payload = (
+            """<?xml version="1.0" encoding="UTF-8" standalone="no" ?><invitations><messagebody>"""
+            """<![CDATA[Site Invite Via HighQ Sys Admin App]]></messagebody><transactionids>"""
+            """<transactionid>{user_id}</transactionid></transactionids></invitations>""".format(
+                user_id=user_id
+            )
         )
         response = requests.put(url, headers=headers, data=payload)
 

@@ -2,10 +2,11 @@ import json
 
 import requests
 from django import forms
+from django.utils.datastructures import MultiValueDictKeyError
 
 from highqsysadmin.settings import base
 from siteadmin.forms import is_empty
-from siteadmin.token_gen import token_generation
+from core.token_gen import token_generation
 
 
 class HighQOrgSearchForm(forms.Form):
@@ -20,12 +21,11 @@ class HighQOrgSearchForm(forms.Form):
         result = {}
         try:
             orgname = self.data["orgname"]
-        except:
+        except MultiValueDictKeyError:
             orgname = None
-            pass
         try:
             domainname = self.data["domainname"]
-        except:
+        except MultiValueDictKeyError:
             domainname = None
             pass
         # why are those two fields not in 'cleaned data'?
