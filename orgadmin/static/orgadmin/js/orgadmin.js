@@ -119,17 +119,17 @@ $("#hqOrgSubmitForm").submit(function(event) {
             },
             dataType: 'json',
 
-            success: function (search_result) {
-                $('#hqOrgSearchForm').trigger("reset");
-                if (search_result.success == true) {
-                    alert(search_result.message + search_result.name);
+            success: function (submission_result) {
+                $('#hqOrgSubmitForm').trigger("reset");
+                if (submission_result.success == true) {
+                    alert(submission_result.message + submission_result.name);
                 } else {
-                    appendToresultTile(search_result);
+                    alert(submission_result.message + submission_result.name);
                 }
             }
         });
       } else {
         alert("Problem submitting the form");
     }
-    $('#hqOrgSearchForm').trigger("reset");
+    $('#hqOrgSubmitForm').trigger("reset");
 });

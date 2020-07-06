@@ -1,4 +1,4 @@
-<a href="https://highq.com/en-us/"><img src="https://1p0jkz3e2xvk1e5kpr1w6nh7-wpengine.netdna-ssl.com/wp-content/uploads/IpadPro_ProjFalcon_sm_US.png" title="HighQCollaborate"></a>
+<a href="https://highq.com/en-us/"><img src="https://1p0jkz3e2xvk1e5kpr1w6nh7-wpengine.netdna-ssl.com/wp-content/uploads/IpadPro_ProjFalcon_sm_US.png"  title="HighQCollaborate" style="max-width:75%;"></a>
 
 
 # HighQ API Consumer

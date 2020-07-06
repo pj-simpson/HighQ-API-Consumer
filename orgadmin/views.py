@@ -35,6 +35,6 @@ class HighQOrgSubmit(LoginRequiredMixin, View):
         if "orgname" in request.GET:
             form = HighQOrgSubmitForm(request.GET)
             if form.is_valid():
-                search_result = form.submit()
+                submission_result = form.submit()
 
-        return JsonResponse(search_result, safe=False)
+        return JsonResponse(submission_result, safe=False)
