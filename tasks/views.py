@@ -25,7 +25,6 @@ class TaskCreateView(
     model = Task
     fields = ["subject", "body"]
     template_name_suffix = "_create_form"
-    success_message = "Task Successfully created!"
     permission_required = "tasks.add_task"
     context_object_name = "task"
 
@@ -33,6 +32,7 @@ class TaskCreateView(
         form.instance.poster = self.request.user
         super(TaskCreateView, self).form_valid(form)
         create_action(self.request.user, "just raised a new issue:", self.object)
+        messages.success(self.request, "Task created successfully")
         return HttpResponseRedirect(self.get_success_url())
 
     def get_context_data(self, **kwargs):
@@ -40,6 +40,7 @@ class TaskCreateView(
         context["nav"] = "tasks"
         context["menu"] = "create"
         return context
+
 
 
 class TaskListView(LoginRequiredMixin, ListView):
@@ -106,11 +107,10 @@ class TaskDetailView(LoginRequiredMixin, DetailView):
         return context
 
 
-class TaskEditView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+class TaskEditView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView, SuccessMessageMixin):
     model = Task
     fields = ["status", "asignee"]
     success_url = "/tasks/"
-    success_message = "Task Successfully updated!"
     permission_required = "tasks.change_task"
     context_object_name = "task"
 
@@ -122,6 +122,7 @@ class TaskEditView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     def form_valid(self, form):
         super(TaskEditView, self).form_valid(form)
         create_action(self.request.user, "just updated an issue:", self.object)
+        messages.success(self.request, "Task updated successfully")
         return HttpResponseRedirect(self.get_success_url())
 
 
