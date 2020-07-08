@@ -4,8 +4,8 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.views import View
 
-from highqsysadmin.settings import base
 from core.token_gen import token_generation
+from highqsysadmin.settings import base
 from useradmin.forms import HighQUserForm
 
 # load the page where the search form will be

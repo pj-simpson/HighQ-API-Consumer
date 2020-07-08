@@ -20,8 +20,8 @@ from django.urls import include, path
 from django.views.generic import RedirectView
 from rest_framework_swagger.views import get_swagger_view
 
-from profiles.views import UserRegisterView
 from core import views
+from profiles.views import UserRegisterView
 
 schema_view = get_swagger_view(title="Swagger Documentation")
 

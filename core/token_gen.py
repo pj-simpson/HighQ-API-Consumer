@@ -4,7 +4,6 @@ import requests
 from django.utils import timezone
 
 from highqsysadmin.settings import base
-
 from siteadmin.models import OauthToken
 
 

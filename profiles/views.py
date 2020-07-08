@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import Group
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
+
 from actions.utils import create_action
 
 from .forms import ProfileEditForm, UserRegistrationForm

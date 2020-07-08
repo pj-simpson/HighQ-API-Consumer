@@ -4,9 +4,9 @@ import requests
 from django import forms
 from django.utils.datastructures import MultiValueDictKeyError
 
+from core.token_gen import token_generation
 from highqsysadmin.settings import base
 from siteadmin.forms import is_empty
-from core.token_gen import token_generation
 
 
 class HighQOrgSearchForm(forms.Form):

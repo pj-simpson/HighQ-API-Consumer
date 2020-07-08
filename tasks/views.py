@@ -2,7 +2,8 @@ import json
 
 import requests
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.mixins import (LoginRequiredMixin,
+                                        PermissionRequiredMixin)
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
 from django.http import HttpResponseRedirect, JsonResponse
@@ -11,8 +12,8 @@ from django.views import View
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 
 from actions.utils import create_action
-from highqsysadmin.settings import base
 from core.token_gen import token_generation
+from highqsysadmin.settings import base
 
 from .forms import TaskCollabPushForm
 from .get_task_statuses import get_task_status
@@ -40,7 +41,6 @@ class TaskCreateView(
         context["nav"] = "tasks"
         context["menu"] = "create"
         return context
-
 
 
 class TaskListView(LoginRequiredMixin, ListView):
@@ -107,7 +107,9 @@ class TaskDetailView(LoginRequiredMixin, DetailView):
         return context
 
 
-class TaskEditView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView, SuccessMessageMixin):
+class TaskEditView(
+    LoginRequiredMixin, PermissionRequiredMixin, UpdateView, SuccessMessageMixin
+):
     model = Task
     fields = ["status", "asignee"]
     success_url = "/tasks/"

@@ -1,7 +1,7 @@
 import requests
 
-from highqsysadmin.settings import base
 from core.token_gen import token_generation
+from highqsysadmin.settings import base
 
 
 def get_task_status(site_id):
