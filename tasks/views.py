@@ -1,9 +1,9 @@
 import json
 
 import requests
+from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth.mixins import (LoginRequiredMixin,
-                                        PermissionRequiredMixin)
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
 from django.http import HttpResponseRedirect, JsonResponse
@@ -13,7 +13,6 @@ from django.views.generic import CreateView, DetailView, ListView, UpdateView
 
 from actions.utils import create_action
 from core.token_gen import token_generation
-from highqsysadmin.settings import base
 
 from .forms import TaskCollabPushForm
 from .get_task_statuses import get_task_status
@@ -150,8 +149,7 @@ class TaskPushToCollabView(PermissionRequiredMixin, LoginRequiredMixin, View):
         if form:
             task_list_id = form.data["task_list"]
             site_id = form.data["site"]
-            endpoint = "{instance}api/3/tasks?tasklistid={tasklistid}"
-            url = endpoint.format(instance=base.INSTANCE, tasklistid=task_list_id)
+            url = f"{settings.INSTANCE}api/3/tasks?tasklistid={task_list_id}"
 
             payload = json.dumps(
                 {
@@ -166,7 +164,7 @@ class TaskPushToCollabView(PermissionRequiredMixin, LoginRequiredMixin, View):
             # we create the token later
             token = token_generation()
             headers = {
-                "Authorization": "Bearer %s" % token["token_result"]["token"],
+                "Authorization": f"Bearer {token}",
                 "Accept": "application/json",
                 "Content-Type": "application/json",
             }
@@ -186,12 +184,10 @@ class TaskPushToCollabView(PermissionRequiredMixin, LoginRequiredMixin, View):
 class TasksGetSiteTaskList(LoginRequiredMixin, View):
     def get(self, request, pk, post):
         token = token_generation()
-        result = {}
         site_id = request.GET.get("siteid", "")
-        endpoint = "{instance}api/3/tasks/lists?siteid={site_id}"
-        url = endpoint.format(instance=base.INSTANCE, site_id=site_id)
+        url = f"{settings.INSTANCE}api/3/tasks/lists?siteid={site_id}"
         headers = {
-            "Authorization": "Bearer %s" % token["token_result"]["token"],
+            "Authorization": f"Bearer {token}",
             "Accept": "application/json",
         }
         response = requests.get(url, headers=headers)

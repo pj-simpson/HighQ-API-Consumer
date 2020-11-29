@@ -1,23 +1,21 @@
 import requests
 from django import forms
+from django.conf import settings
 
 from core.token_gen import token_generation
-from highqsysadmin.settings import base
 
 
 def get_sites_with_tasks():
     token = token_generation()
-    result = {}
-    endpoint = "{instance}api/4/sites?"
-    url = endpoint.format(instance=base.INSTANCE)
+    url = f"{settings.INSTANCE}api/4/sites?"
     headers = {
-        "Authorization": "Bearer %s" % token["token_result"]["token"],
+        "Authorization": f"Bearer {token}",
         "Accept": "application/json",
     }
     response = requests.get(url, headers=headers)
     if response.status_code == 200:
         result = response.json()
-        # make result a list of dicts
+        # make result a list of tuples
         result = result["site"]
         list = [("", "")]
         for i in result:

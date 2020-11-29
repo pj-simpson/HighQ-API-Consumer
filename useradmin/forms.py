@@ -15,7 +15,7 @@ class HighQUserForm(forms.Form):
         endpoint = "{instance}api/6/users/{user_email}?type=email"
         url = endpoint.format(instance=settings.INSTANCE, user_email=email)
         headers = {
-            "Authorization": "Bearer %s" % token["token_result"]["token"],
+            "Authorization": f"Bearer {token}",
             "Accept": "application/json",
         }
         response = requests.get(url, headers=headers)

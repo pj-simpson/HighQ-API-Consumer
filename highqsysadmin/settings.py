@@ -11,19 +11,42 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+
 from decouple import config
 from django.contrib.messages import constants as messages
 
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(
-    os.path.dirname(os.path.abspath(os.path.join(__file__, os.pardir)))
-)
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 TEMPLATE_DIR = os.path.join(BASE_DIR, "templates")
 STATIC_DIR = os.path.join(BASE_DIR, "static")
 MEDIA_DIR = os.path.join(BASE_DIR, "media")
 
 SECRET_KEY = config("SECRET_KEY")
+
+DEBUG = config("DEBUG", default=True, cast=bool)
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+    }
+}
+
+# ALLOWED_HOSTS = [
+#     "www.highqsysadmin.com",
+# ]
+#
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.mysql",
+#         "NAME": config("PYTHONANYWHEREMYSQLDBNAME", default=""),
+#         "USER": config("PYTHONANYWHEREMYSQLDBUSER", default=""),
+#         "PASSWORD": config("PYTHONANYWHEREMYSQLDBPASS", default=""),
+#         "HOST": config("PYTHONANYWHEREMYSQLDBHOST", default=""),
+#     }
+# }
+
+THUMBNAIL_DEBUG = config("THUMBNAIL_DEBUG", default=True, cast=bool)
 
 
 # Quick-start development settings - unsuitable for production
@@ -42,7 +65,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "django_crontab",
     "rest_framework",
     "core",
     "useradmin",
@@ -124,7 +146,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "Europe/London"
+TIME_ZONE = "UTC"
 
 USE_I18N = True
 
@@ -219,3 +241,16 @@ CRONJOBS = [
 ]
 
 CRONTAB_DJANGO_SETTINGS_MODULE = "highqsysadmin.settings.local"
+
+
+# if not DEBUG:
+#     SECURE_BROWSER_XSS_FILTER = True
+#     X_FRAME_OPTIONS = "DENY"
+#     SECURE_SSL_REDIRECT = True
+#     SECURE_HSTS_SECONDS = 3600
+#     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+#     SECURE_HSTS_PRELOAD = True
+#     SECURE_CONTENT_TYPE_NOSNIFF = True
+#     SESSION_COOKIE_SECURE = True
+#     CSRF_COOKIE_SECURE = True
+#     SECURE_REFERRER_POLICY = "same-origin"

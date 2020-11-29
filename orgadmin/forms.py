@@ -2,10 +2,10 @@ import json
 
 import requests
 from django import forms
+from django.conf import settings
 from django.utils.datastructures import MultiValueDictKeyError
 
 from core.token_gen import token_generation
-from highqsysadmin.settings import base
 from siteadmin.forms import is_empty
 
 
@@ -18,7 +18,6 @@ class HighQOrgSearchForm(forms.Form):
 
     def search(self):
         token = token_generation()
-        result = {}
         try:
             orgname = self.data["orgname"]
         except MultiValueDictKeyError:
@@ -30,26 +29,15 @@ class HighQOrgSearchForm(forms.Form):
             pass
         # why are those two fields not in 'cleaned data'?
         status = self.cleaned_data["status"]
-        endpoint = ""
         if not orgname:
-            endpoint = (
-                "{instance}api/4/organisations?domain={domainname}&status={status}"
-            )
+            url = f"{settings.INSTANCE}api/4/organisations?domain={domainname}&status={status}"
         elif not domainname:
-            endpoint = (
-                "{instance}api/4/organisations?searchTxt={orgname}&status={status}"
-            )
+            url = f"{settings.INSTANCE}api/4/organisations?searchTxt={orgname}&status={status}"
         else:
-            endpoint = "{instance}api/4/organisations?searchTxt={orgname}&domain={domainname}&status={status}"
+            url = f"{settings.INSTANCE}api/4/organisations?searchTxt={orgname}&domain={domainname}&status={status}"
 
-        url = endpoint.format(
-            instance=base.INSTANCE,
-            orgname=orgname,
-            domainname=domainname,
-            status=status,
-        )
         headers = {
-            "Authorization": "Bearer %s" % token["token_result"]["token"],
+            "Authorization": f"Bearer {token}",
             "Accept": "application/json",
         }
         response = requests.get(url, headers=headers)
@@ -66,6 +54,7 @@ class HighQOrgSearchForm(forms.Form):
                 result["empty_check"] = False
 
         else:
+            result = {}
             result["success"] = False
             result[
                 "message"
@@ -84,16 +73,14 @@ class HighQOrgSubmitForm(forms.Form):
 
     def submit(self):
         token = token_generation()
-        result = {}
         orgname = self.data["orgname"]
         orgurl = self.data["orgurl"]
         # why are those two fields not in 'cleaned data'?
         status = self.cleaned_data["status"]
         domain = self.data["orgdomain"]
-        endpoint = "{instance}api/4/organisations"
-        url = endpoint.format(instance=base.INSTANCE)
+        url = f"{settings.INSTANCE}api/4/organisations"
         headers = {
-            "Authorization": "Bearer %s" % token["token_result"]["token"],
+            "Authorization": f"Bearer {token}",
             "Accept": "application/json",
             "Content-Type": "application/json",
         }
@@ -108,11 +95,10 @@ class HighQOrgSubmitForm(forms.Form):
             result["message"] = "New Org Created"
 
             orgid = result["orgid"]
-            endpoint = "{instance}api/4/domains?orgid={orgid}"
-            url = endpoint.format(instance=base.INSTANCE, orgid=orgid)
+            url = f"{settings.INSTANCE}api/4/domains?orgid={orgid}"
             token2 = token_generation()
             headers = {
-                "Authorization": "Bearer %s" % token2["token_result"]["token"],
+                "Authorization": f"Bearer {token}",
                 "Accept": "application/json",
                 "Content-Type": "application/json",
             }
@@ -128,6 +114,7 @@ class HighQOrgSubmitForm(forms.Form):
                 result["message"] = "Created the domain but failed to create an org"
 
         else:
+            result = {}
             result["success"] = False
             result["message"] = "Failed to create an Org"
 

@@ -1,14 +1,12 @@
 import requests
+from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.views import View
 
 from core.token_gen import token_generation
-from highqsysadmin.settings import base
 from useradmin.forms import HighQUserForm
-
-# load the page where the search form will be
 
 
 class HighQUserSearchPage(LoginRequiredMixin, View):
@@ -33,21 +31,20 @@ class HighQUserSearch(LoginRequiredMixin, View):
 
 class HighQUserRemove(LoginRequiredMixin, View):
     def get(self, request):
-        result = {}
         token = token_generation()
         user_id = request.GET.get("user_id", "")
         site_id = request.GET.get("site_id", "")
         user_id = int(user_id)
-        endpoint = "{instance}api/3/sites/{site_id}/users"
-        url = endpoint.format(instance=base.INSTANCE, site_id=site_id)
+        url = f"{settings.INSTANCE}api/3/sites/{site_id}/users"
         headers = {
-            "Authorization": "Bearer %s" % token["token_result"]["token"],
+            "Authorization": f"Bearer {token}",
             "Content-Type": "application/xml",
             "Accept": "application/json",
         }
         payload = (
+            # for some reason this endpoint wasnt accpeting json at the time of coding
             """<?xml version="1.0" encoding="UTF-8" standalone="no" ?><transactionids><transactionid>"""
-            """{user_id}</transactionid></transactionids>""".format(user_id=user_id)
+            f"""{user_id}</transactionid></transactionids>"""
         )
         response = requests.delete(url, headers=headers, data=payload)
 
@@ -59,29 +56,23 @@ class HighQUserRemove(LoginRequiredMixin, View):
         return JsonResponse(result)
 
 
-# Debug and sort this out first and then copy for suspend:
-
-
 class HighQUserSiteInvite(LoginRequiredMixin, View):
     def get(self, request):
-        result = {}
         token = token_generation()
         user_id = request.GET.get("user_id", "")
         site_id = request.GET.get("site_id", "")
         user_id = int(user_id)
-        endpoint = "{instance}api/3/sites/{site_id}/users/invitation"
-        url = endpoint.format(instance=base.INSTANCE, site_id=site_id)
+        url = f"{settings.INSTANCE}api/3/sites/{site_id}/users/invitation"
         headers = {
-            "Authorization": "Bearer %s" % token["token_result"]["token"],
+            "Authorization": f"Bearer {token}",
             "Content-Type": "application/xml",
             "Accept": "application/json",
         }
         payload = (
+            # another endpoint not accpeting json
             """<?xml version="1.0" encoding="UTF-8" standalone="no" ?><invitations><messagebody>"""
             """<![CDATA[Site Invite Via HighQ Sys Admin App]]></messagebody><transactionids>"""
-            """<transactionid>{user_id}</transactionid></transactionids></invitations>""".format(
-                user_id=user_id
-            )
+            f"""<transactionid>{user_id}</transactionid></transactionids></invitations>"""
         )
         response = requests.put(url, headers=headers, data=payload)
 

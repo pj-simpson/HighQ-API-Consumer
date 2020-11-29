@@ -17,12 +17,10 @@ class HighQSiteForm(forms.Form):
 
     def search(self):
         token = token_generation()
-        result = {}
         sitename = self.cleaned_data["sitename"]
-        endpoint = "{instance}api/6/sites/?name={sitename}"
-        url = endpoint.format(instance=settings.INSTANCE, sitename=sitename)
+        url = f"{settings.INSTANCE}api/6/sites/?name={sitename}"
         headers = {
-            "Authorization": "Bearer %s" % token["token_result"]["token"],
+            "Authorization": f"Bearer {token}",
             "Accept": "application/json",
         }
         response = requests.get(url, headers=headers)
@@ -51,6 +49,7 @@ class HighQSiteForm(forms.Form):
                 result["empty_check"] = False
 
         else:
+            result = {}
             result["success"] = False
             result[
                 "message"
@@ -66,22 +65,21 @@ class HighQSiteOwnerMessage(forms.Form):
 
     def send(self):
         token = token_generation()
-        result = {}
         email_message = self.cleaned_data["email_message"]
         user_id = self.cleaned_data["user_id"]
         site_id = self.cleaned_data["site_id"]
-        endpoint = "{instance}api/3/sites/{site_id}/users/email"
-        url = endpoint.format(instance=settings.INSTANCE, site_id=site_id)
+        url = f"{settings.INSTANCE}api/3/sites/{site_id}/users/email"
         headers = {
-            "Authorization": "Bearer %s" % token["token_result"]["token"],
+            "Authorization": f"Bearer {token}",
             "Content-Type": "application/xml",
             "Accept": "application/json",
         }
         payload = (
+            # For some reason this endpoint doesnt accept json
             """<?xml version="1.0" encoding="UTF-8" standalone="no" ?><emailusers><emailsubject>"""
-            """"Message From HighQ Sys Admin App</emailsubject><messagebody><![CDATA[{email_message}]]>"""
-            """</messagebody><transactionids><transactionid>{user_id}</transactionid></transactionids>"""
-            """</emailusers>""".format(user_id=user_id, email_message=email_message)
+            f""""Message From HighQ Sys Admin App</emailsubject><messagebody><![CDATA[{email_message}]]>"""
+            f"""</messagebody><transactionids><transactionid>{user_id}</transactionid></transactionids>"""
+            """</emailusers>"""
         )
         response = requests.put(url, headers=headers, data=payload)
 
