@@ -18,12 +18,27 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 from django.views.generic import RedirectView
-from rest_framework_swagger.views import get_swagger_view
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+from rest_framework import permissions
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="HighQ Support Training APIs",
+        default_version="v1",
+        description="A simple API for our Zendesk alternative",
+        terms_of_service="https://supportteam.highq.com/supportuat/termsOfUse.action",
+        contact=openapi.Contact(email="peter.simpson@highq.com"),
+        license=openapi.License(name="BSD License"),
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
+)
+
 
 from core import views
 from profiles.views import UserRegisterView
 
-schema_view = get_swagger_view(title="Swagger Documentation")
 
 
 urlpatterns = [
@@ -44,7 +59,11 @@ urlpatterns = [
     path("ckeditor/", include("ckeditor_uploader.urls")),
     path("api/", include("api.urls")),
     path("api/api-auth/", include("rest_framework.urls")),
-    path("docs/", schema_view, name="swagger_docs"),
+    path(
+            "swagger/",
+            schema_view.with_ui("swagger", cache_timeout=0),
+            name="swagger_docs",
+        ),
 ]
 
 if settings.DEBUG:

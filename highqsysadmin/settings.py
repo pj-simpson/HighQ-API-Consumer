@@ -78,7 +78,7 @@ INSTALLED_APPS = [
     "sorl.thumbnail",
     "phonenumber_field",
     "ckeditor",
-    "rest_framework_swagger",
+    "drf_yasg",
     "django_filters",
     "debug_toolbar",
 ]
