@@ -90,9 +90,6 @@ ROOT_URLCONF = "highqsysadmin.urls"
 
 STATIC_URL = "/static/"
 
-STATICFILES_DIRS = [
-    STATIC_DIR,
-]
 
 STATIC_ROOT = "/home/PeterJosephSimpson/HighQ-API-Consumer/static"
 

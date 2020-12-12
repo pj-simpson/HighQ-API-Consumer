@@ -9,11 +9,9 @@ class HighQUserForm(forms.Form):
     email = forms.EmailField(max_length=200)
 
     def search(self):
-        result = {}
         token = token_generation()
         email = self.cleaned_data["email"]
-        endpoint = "{instance}api/6/users/{user_email}?type=email"
-        url = endpoint.format(instance=settings.INSTANCE, user_email=email)
+        url = f"{settings.INSTANCE}api/6/users/{email}?type=email"
         headers = {
             "Authorization": f"Bearer {token}",
             "Accept": "application/json",
